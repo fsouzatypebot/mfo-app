@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -475,6 +476,61 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 .empty-ic{font-size:52px;margin-bottom:14px}
 .empty-ti{font-size:17px;font-weight:800;color:var(--t);margin-bottom:6px}
 .empty-sb{font-size:13px;color:var(--t3);line-height:1.6}
+/* ══════════════ PDF IMPORT ══════════════ */
+.pdf-banner{
+  margin:12px 16px 0;
+  background:linear-gradient(135deg,#eff6ff,var(--bl));
+  border:1.5px solid rgba(37,99,235,.15);
+  border-radius:14px;padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .18s;
+}
+.pdf-banner:active{transform:scale(.98)}
+.pdf-banner-left{display:flex;align-items:center;gap:12px}
+.pdf-banner-ic{width:40px;height:40px;border-radius:12px;background:var(--bl);display:flex;align-items:center;justify-content:center;font-size:20px}
+.pdf-banner-title{font-size:14px;font-weight:800;color:var(--b)}
+.pdf-banner-sub{font-size:11px;color:rgba(37,99,235,.7);margin-top:2px;font-weight:600}
+.pdf-banner-arrow{font-size:18px;color:var(--b);font-weight:700}
+.pdf-drop-zone{
+  border:2px dashed var(--bd2);border-radius:18px;
+  padding:32px 20px;text-align:center;cursor:pointer;
+  transition:all .2s;background:var(--bg);margin-bottom:16px;
+}
+.pdf-drop-zone:active{border-color:var(--b);background:var(--bl)}
+.pdz-icon{font-size:48px;margin-bottom:12px}
+.pdz-title{font-size:16px;font-weight:800;color:var(--t);margin-bottom:6px}
+.pdz-sub{font-size:13px;color:var(--t2);line-height:1.5;margin-bottom:10px}
+.pdz-hint{font-size:11px;color:var(--t3);padding:8px 12px;background:var(--gl);border-radius:8px;line-height:1.4;font-weight:600}
+.pdf-banks{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.pdf-bank-chip{font-size:11px;font-weight:700;padding:4px 10px;background:var(--s2);border:1px solid var(--bd);border-radius:20px;color:var(--t2)}
+.pdf-loading{text-align:center;padding:40px 20px}
+.pdf-spinner{width:48px;height:48px;border:4px solid var(--s3);border-top-color:var(--g);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pdf-loading-title{font-size:17px;font-weight:800;color:var(--t);margin-bottom:6px}
+.pdf-loading-sub{font-size:13px;color:var(--t3);margin-bottom:16px}
+.pdf-progress-bar{height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin:0 16px}
+.pdf-progress-fill{height:100%;background:linear-gradient(90deg,var(--gd),var(--g));border-radius:3px;transition:width .4s ease}
+.pdf-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
+.pdf-result-stats{font-size:13px;color:var(--t2);font-weight:700}
+.pdf-result-stats span{color:var(--g);font-family:var(--m);font-size:15px}
+.pdf-txn-preview-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--s3);
+  cursor:pointer;
+}
+.pdf-txn-preview-item:last-child{border-bottom:none}
+.pdf-txn-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px;color:transparent}
+.pdf-txn-check.on{background:var(--g);border-color:var(--g);color:#fff}
+.pdf-txn-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.pdf-txn-info{flex:1;min-width:0}
+.pdf-txn-name{font-size:13px;font-weight:700;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-txn-meta{font-size:11px;color:var(--t3);margin-top:1px}
+.pdf-txn-val{font-family:var(--m);font-size:13px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.pdf-txn-val.exp{color:var(--r)}.pdf-txn-val.inc{color:var(--g)}
+.pdf-cat-sel{font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--bd);background:var(--s2);color:var(--t2);font-family:var(--f);cursor:pointer;margin-top:3px;-webkit-appearance:none;appearance:none}
+.pdf-import-summary{background:var(--gl);border:1px solid rgba(22,163,74,.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.pdf-import-summary .ps-label{font-size:12px;font-weight:700;color:var(--gd)}
+.pdf-import-summary .ps-val{font-family:var(--m);font-size:16px;font-weight:700;color:var(--g)}
 .spacer{height:16px}
 </style>
 </head>
@@ -598,8 +654,8 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
     <div class="qa-grid">
       <div class="qa" onclick="openTxn('expense')"><div class="qa-ic" style="background:#fee2e2">💸</div><div class="qa-lb">Gasto</div></div>
       <div class="qa" onclick="openTxn('income')"><div class="qa-ic" style="background:#dcfce7">💰</div><div class="qa-lb">Entrada</div></div>
-      <div class="qa" onclick="goPage('pg-ai')"><div class="qa-ic" style="background:#ede9fe">🤖</div><div class="qa-lb">Consultor IA</div></div>
-      <div class="qa" onclick="goPage('pg-ach')"><div class="qa-ic" style="background:#fef3c7">🏆</div><div class="qa-lb">Conquistas</div></div>
+      <div class="qa" onclick="openPdfImport()"><div class="qa-ic" style="background:#dbeafe">📄</div><div class="qa-lb">Importar PDF</div></div>
+      <div class="qa" onclick="goPage('pg-ai')"><div class="qa-ic" style="background:#ede9fe">🤖</div><div class="qa-lb">Finn IA</div></div>
     </div>
 
     <!-- Forecast -->
@@ -634,7 +690,24 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
   <!-- ████ TRANSACTIONS ████ -->
   <div class="pg" id="pg-txns">
     <div class="ph">
-      <div class="ph-row"><div><div class="ptitle">Transações</div><div class="ph-sub" id="txn-sub">...</div></div><button class="ph-btn" onclick="openTxn('expense')">+ Adicionar</button></div>
+      <div class="ph-row">
+        <div><div class="ptitle">Transações</div><div class="ph-sub" id="txn-sub">...</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="ph-btn" style="background:var(--bl);color:var(--b)" onclick="openPdfImport()">📄 PDF</button>
+          <button class="ph-btn" onclick="openTxn('expense')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+    <!-- PDF import banner -->
+    <div class="pdf-banner" onclick="openPdfImport()">
+      <div class="pdf-banner-left">
+        <div class="pdf-banner-ic">📄</div>
+        <div>
+          <div class="pdf-banner-title">Importar extrato bancário</div>
+          <div class="pdf-banner-sub">Nubank, Itaú, Bradesco, C6 e mais</div>
+        </div>
+      </div>
+      <div class="pdf-banner-arrow">→</div>
     </div>
     <div class="mstrip"><button class="mn-btn" onclick="changeMonth(-1)">‹</button><span class="mn-lbl" id="txn-m-lbl">...</span><button class="mn-btn" onclick="changeMonth(1)">›</button></div>
     <div class="frow" id="filter-row">
@@ -836,7 +909,70 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
   </div>
 </div>
 
-<!-- ══ MODAL: CARD ══ -->
+<!-- ══ MODAL: PDF IMPORT ══ -->
+<input type="file" id="pdf-input" accept=".pdf,application/pdf" style="display:none" onchange="handlePdfFile(this)"/>
+<div class="overlay" id="ov-pdf">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-hdr">
+      <div class="sh-title">📄 Importar extrato PDF</div>
+      <button class="sh-close" onclick="closeOv('ov-pdf')">✕</button>
+    </div>
+    <div class="sh-body">
+      <!-- Step 1: Upload -->
+      <div id="pdf-step1">
+        <div class="pdf-drop-zone" onclick="document.getElementById('pdf-input').click()" id="pdf-drop">
+          <div class="pdz-icon">📂</div>
+          <div class="pdz-title">Toque para selecionar o PDF</div>
+          <div class="pdz-sub">Extrato do Nubank, Itaú, Bradesco,<br>Santander, C6, BB e outros bancos</div>
+          <div class="pdz-hint">O arquivo é lido no seu celular — nada é enviado para servidores</div>
+        </div>
+        <div class="pdf-banks">
+          <div class="pdf-bank-chip">🟣 Nubank</div>
+          <div class="pdf-bank-chip">🔵 Itaú</div>
+          <div class="pdf-bank-chip">🔴 Bradesco</div>
+          <div class="pdf-bank-chip">🟠 Santander</div>
+          <div class="pdf-bank-chip">⚫ C6 Bank</div>
+          <div class="pdf-bank-chip">🔵 Banco do Brasil</div>
+          <div class="pdf-bank-chip">🟢 Inter</div>
+          <div class="pdf-bank-chip">+ outros</div>
+        </div>
+      </div>
+      <!-- Step 2: Processing -->
+      <div id="pdf-step2" style="display:none">
+        <div class="pdf-loading">
+          <div class="pdf-spinner"></div>
+          <div class="pdf-loading-title">Lendo seu extrato...</div>
+          <div class="pdf-loading-sub" id="pdf-progress-text">Extraindo texto do PDF</div>
+          <div class="pdf-progress-bar"><div class="pdf-progress-fill" id="pdf-progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <!-- Step 3: Preview -->
+      <div id="pdf-step3" style="display:none">
+        <div class="pdf-result-header">
+          <div class="pdf-result-stats" id="pdf-result-stats"></div>
+          <div class="pdf-select-all">
+            <span style="font-size:12px;color:var(--t2);font-weight:600">Selecionar tudo</span>
+            <input type="checkbox" id="pdf-select-all" onchange="pdfToggleAll(this.checked)" checked style="width:18px;height:18px;accent-color:var(--g);cursor:pointer"/>
+          </div>
+        </div>
+        <div id="pdf-txn-preview"></div>
+        <div style="position:sticky;bottom:0;background:var(--s);padding:12px 0 0">
+          <button class="sb2" id="pdf-import-btn" onclick="confirmPdfImport()">Importar transações selecionadas</button>
+        </div>
+      </div>
+      <!-- Step 4: Error -->
+      <div id="pdf-step4" style="display:none">
+        <div class="empty">
+          <div class="empty-ic">😕</div>
+          <div class="empty-ti">Não consegui ler este PDF</div>
+          <div class="empty-sb" id="pdf-error-msg">Tente exportar o extrato diretamente pelo app do banco, no formato PDF.</div>
+          <button class="sb2" style="margin-top:16px" onclick="resetPdfImport()">Tentar outro arquivo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="overlay" id="ov-card">
   <div class="sheet">
     <div class="sh-handle"></div>
@@ -1560,6 +1696,176 @@ function animNums(){
   if(!target)return;var t0=null;
   function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1200,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target);if(p<1)requestAnimationFrame(step);}
   requestAnimationFrame(step);
+}
+
+
+/* ═══════════════════════════════════
+   PDF IMPORT ENGINE
+═══════════════════════════════════ */
+var pdfParsed=[];var pdfSelected=[];
+var CAT_KEYWORDS={
+  'Alimentação':['ifood','rappi','uber eats','mcdonalds','mc donalds','burguer','burger','pizza','subway','outback','churrascaria','restaurante','padaria','lanchonete','acai','acaí','hortifruti','supermercado','mercado','extra','carrefour','pao de acucar','assai','atacadao'],
+  'Transporte':['uber','99 ','cabify','taxi','táxi','shell','posto','ipiranga','petrobras','combustivel','gasolina','estacionamento','autopass','sem parar','conectcar','veloe','onibus','metrô','metro','brt','sptrans'],
+  'Moradia':['aluguel','condominio','condomínio','iptu','sabesp','embasa','enel','cemig','copel','cpfl','internet','vivo','claro','tim ','oi ','net ','sky ','gás','comgas'],
+  'Saúde':['farmacia','droga','drogasil','ultrafarma','panvel','nissei','pacheco','unimed','bradesco saude','sulamerica','amil','hapvida','medico','médico','clinica','clínica','hospital','laboratorio','odonto','dentista'],
+  'Lazer':['netflix','spotify','amazon prime','disney','hbo','globoplay','deezer','youtube','steam','playstation','xbox','apple ','cinema','ingresso','show ','teatro','airbnb','booking','hotel','pousada','bar ','balada'],
+  'Compras':['amazon','mercado livre','mercadolivre','shopee','magazine','magalu','americanas','casas bahia','submarino','centauro','decathlon','riachuelo','renner','c&a','hering','zara','leroy'],
+  'Educação':['escola','colegio','faculdade','universidade','udemy','coursera','alura','descomplica','cursinho','livraria'],
+  'Contas':['boleto','conta de','pagamento','tributo','imposto','darf','das ','gps ','fgts','inss','ipva','multa','cartorio'],
+  'Salário':['salario','salário','pagamento salario','deposito salario','folha','pro-labore','prolabore','remuneracao'],
+  'Investimentos':['investimento','rendimento','cdb','lci','lca','tesouro','acoes','fundo','dividendo','juros','aplicacao','resgate','poupanca'],
+};
+function catFromDesc(desc){
+  var d=desc.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for(var cat in CAT_KEYWORDS){var keys=CAT_KEYWORDS[cat];for(var i=0;i<keys.length;i++){if(d.includes(keys[i].normalize('NFD').replace(/[\u0300-\u036f]/g,'')))return cat;}}
+  return 'Outros';
+}
+function typeFromDesc(desc,amount){
+  var d=desc.toLowerCase();
+  var ik=['salario','salário','rendimento','dividendo','resgate','reembolso','pix recebido','transferencia recebida','deposito','credito em conta','pagamento recebido'];
+  for(var i=0;i<ik.length;i++){if(d.includes(ik[i]))return 'income';}
+  return amount>0?'income':'expense';
+}
+function parseDateBR(str){
+  var m;
+  m=str.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(m)return m[3]+'-'+m[2]+'-'+m[1];
+  m=str.match(/(\d{2})\/(\d{2})\/(\d{2})/);if(m)return'20'+m[3]+'-'+m[2]+'-'+m[1];
+  m=str.match(/(\d{2})\/(\d{2})/);if(m){return new Date().getFullYear()+'-'+m[2]+'-'+m[1];}
+  var mns={jan:'01',fev:'02',mar:'03',abr:'04',mai:'05',jun:'06',jul:'07',ago:'08',set:'09',out:'10',nov:'11',dez:'12'};
+  m=str.match(/(\d{1,2})\s+(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/i);
+  if(m){var y=new Date().getFullYear();var dy=m[1].length===1?'0'+m[1]:m[1];return y+'-'+(mns[m[2].toLowerCase()]||'01')+'-'+dy;}
+  return today();
+}
+function parseAmountBR(str){
+  var s=str.replace(/\s/g,'');
+  var neg=s.includes('-')||s.toLowerCase().includes('d');
+  s=s.replace(/[^0-9,.]/g,'');
+  if(s.match(/\d{1,3}(\.\d{3})*,\d{2}$/)){s=s.replace(/\./g,'').replace(',','.');}
+  else if(s.match(/\d+,\d{2}$/)){s=s.replace(',','.');}
+  var val=parseFloat(s)||0;
+  return neg?-val:val;
+}
+function parseGeneric(text){
+  var txns=[];
+  var lines=text.split('\n').map(function(l){return l.trim();}).filter(Boolean);
+  var dateRe=/\b(\d{2}[\/\-]\d{2}[\/\-](?:\d{4}|\d{2})|\d{1,2}\s+(?:jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)(?:\s+\d{2,4})?)/i;
+  var amtRe=/(-?\s*R?\$?\s*[\d]{1,3}(?:[\.\s]?\d{3})*,\d{2}|-?\s*R?\$?\s*\d+[.,]\d{2})/g;
+  for(var i=0;i<lines.length;i++){
+    var l=lines[i];
+    var dm=l.match(dateRe);if(!dm)continue;
+    var amounts=[];var m;var ar=new RegExp(amtRe.source,'g');
+    while((m=ar.exec(l))!==null)amounts.push(m[1]);
+    if(!amounts.length&&i+1<lines.length){var nxt=lines[i+1];var nm=nxt.match(amtRe);if(nm)amounts.push(nm[nm.length-1]);}
+    if(!amounts.length)continue;
+    var rawAmt=amounts[amounts.length-1];
+    var amt=parseAmountBR(rawAmt);
+    if(Math.abs(amt)<0.01||Math.abs(amt)>999999)continue;
+    var desc=l.replace(dateRe,'').replace(new RegExp(amtRe.source,'g'),'').replace(/R\$\s*/g,'').replace(/\s{2,}/g,' ').trim();
+    if(!desc||desc.length<2)desc='Transação bancária';
+    txns.push({date:parseDateBR(dm[1]),description:desc,amount:Math.abs(amt),type:typeFromDesc(desc,amt)});
+  }
+  return txns;
+}
+function parseStatement(text){
+  var txns=parseGeneric(text);
+  var seen={};
+  txns=txns.filter(function(t){
+    if(Math.abs(t.amount)<0.01)return false;
+    var k=t.date+t.description.slice(0,12)+t.amount;
+    if(seen[k])return false;seen[k]=true;return true;
+  });
+  txns.forEach(function(t){t.id=uid();t.category=catFromDesc(t.description);if(t.type==='income'&&t.category==='Outros')t.category='Salário';});
+  return txns.sort(function(a,b){return b.date.localeCompare(a.date);});
+}
+function openPdfImport(){resetPdfImport();openOv('ov-pdf');}
+function resetPdfImport(){showPdfStep(1);document.getElementById('pdf-input').value='';pdfParsed=[];pdfSelected=[];document.getElementById('pdf-progress-fill').style.width='0%';}
+function showPdfStep(n){[1,2,3,4].forEach(function(i){var el=document.getElementById('pdf-step'+i);if(el)el.style.display=i===n?'block':'none';});}
+function setPdfProgress(pct,msg){document.getElementById('pdf-progress-fill').style.width=pct+'%';if(msg)document.getElementById('pdf-progress-text').textContent=msg;}
+
+async function handlePdfFile(input){
+  var file=input.files[0];if(!file)return;
+  showPdfStep(2);setPdfProgress(10,'Carregando PDF...');
+  try{
+    if(!window.pdfjsLib)throw new Error('Biblioteca PDF não carregou. Verifique sua conexão.');
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    var buf=await file.arrayBuffer();
+    setPdfProgress(25,'Abrindo arquivo...');
+    var pdfDoc=await pdfjsLib.getDocument({data:buf}).promise;
+    var numPages=pdfDoc.numPages;var fullText='';
+    for(var p=1;p<=numPages;p++){
+      setPdfProgress(25+Math.round((p/numPages)*55),'Lendo página '+p+' de '+numPages+'...');
+      var page=await pdfDoc.getPage(p);
+      var content=await page.getTextContent();
+      var items=content.items.slice().sort(function(a,b){var dy=Math.abs(b.transform[5]-a.transform[5]);if(dy>3)return b.transform[5]-a.transform[5];return a.transform[4]-b.transform[4];});
+      var prevY=null;
+      items.forEach(function(item){
+        if(!item.str.trim())return;
+        var y=Math.round(item.transform[5]);
+        if(prevY!==null&&Math.abs(y-prevY)>3)fullText+='\n';else if(prevY!==null)fullText+=' ';
+        fullText+=item.str;prevY=y;
+      });
+      fullText+='\n';
+    }
+    setPdfProgress(85,'Identificando transações...');
+    var parsed=parseStatement(fullText);
+    setPdfProgress(100,'Concluído!');
+    if(!parsed.length){document.getElementById('pdf-error-msg').textContent='Não encontrei transações neste PDF. Tente exportar o extrato completo pelo app do banco em PDF de texto (não escaneado).';showPdfStep(4);return;}
+    pdfParsed=parsed;pdfSelected=parsed.map(function(t){return t.id;});
+    renderPdfPreview();showPdfStep(3);
+  }catch(e){
+    console.error(e);
+    document.getElementById('pdf-error-msg').textContent='Erro: '+(e.message||'formato não suportado')+'. Certifique-se que o PDF não está com senha.';
+    showPdfStep(4);
+  }
+}
+
+function renderPdfPreview(){
+  var total=pdfParsed.length;
+  var totExp=pdfParsed.filter(function(t){return t.type==='expense';}).reduce(function(s,t){return s+t.amount;},0);
+  var totInc=pdfParsed.filter(function(t){return t.type==='income';}).reduce(function(s,t){return s+t.amount;},0);
+  document.getElementById('pdf-result-stats').innerHTML='<span>'+total+'</span> transações<br><span style="color:var(--r)">-'+Rs(totExp)+'</span> gastos · <span style="color:var(--g)">+'+Rs(totInc)+'</span> entradas';
+  var catOpts=Object.keys(EMOJIS).map(function(c){return'<option value="'+c+'">'+EMOJIS[c]+' '+c+'</option>';}).join('');
+  document.getElementById('pdf-txn-preview').innerHTML=pdfParsed.map(function(t){
+    var isI=t.type==='income';var col=CAT_COLORS[t.category]||'#888';
+    var d=new Date(t.date+'T12:00');var ds=d.getDate()+'/'+(d.getMonth()+1);
+    var selOpts=catOpts.replace('value="'+t.category+'"','value="'+t.category+'" selected');
+    return'<div class="pdf-txn-preview-item" id="pi-'+t.id+'" onclick="pdfToggle(\''+t.id+'\')">'
+      +'<div class="pdf-txn-check on" id="pc-'+t.id+'">✓</div>'
+      +'<div class="pdf-txn-ico" style="background:'+rgba(col,.12)+'">'+EMOJIS[t.category]+'</div>'
+      +'<div class="pdf-txn-info"><div class="pdf-txn-name">'+t.description+'</div>'
+      +'<div class="pdf-txn-meta">'+ds+' · <select class="pdf-cat-sel" id="pcat-'+t.id+'" onclick="event.stopPropagation()" onchange="pdfUpdateCat(\''+t.id+'\',this.value)">'+selOpts+'</select></div></div>'
+      +'<div class="pdf-txn-val '+(isI?'inc':'exp')+'">'+(isI?'+':'-')+R(t.amount)+'</div>'
+      +'</div>';
+  }).join('');
+  updatePdfBtn();
+}
+
+function pdfToggle(id){
+  var idx=pdfSelected.indexOf(id);
+  if(idx>=0)pdfSelected.splice(idx,1);else pdfSelected.push(id);
+  var ck=document.getElementById('pc-'+id);
+  if(ck){ck.classList.toggle('on',pdfSelected.includes(id));ck.textContent=pdfSelected.includes(id)?'✓':'';}
+  updatePdfBtn();
+}
+function pdfToggleAll(checked){
+  pdfSelected=checked?pdfParsed.map(function(t){return t.id;}):[]; 
+  pdfParsed.forEach(function(t){var ck=document.getElementById('pc-'+t.id);if(ck){ck.classList.toggle('on',checked);ck.textContent=checked?'✓':'';}});
+  updatePdfBtn();
+}
+function pdfUpdateCat(id,cat){var t=pdfParsed.find(function(x){return x.id===id;});if(t){t.category=cat;var ico=document.querySelector('#pi-'+id+' .pdf-txn-ico');if(ico)ico.textContent=EMOJIS[cat]||'💰';}}
+function updatePdfBtn(){var n=pdfSelected.length;var b=document.getElementById('pdf-import-btn');if(b)b.textContent='Importar '+n+' transaç'+(n===1?'ão':'ões')+' selecionada'+(n===1?'':'s');}
+function confirmPdfImport(){
+  if(!pdfSelected.length){showToast('Selecione ao menos uma transação');return;}
+  var toImport=pdfParsed.filter(function(t){return pdfSelected.includes(t.id);});
+  var added=0;
+  toImport.forEach(function(t){
+    var exists=S.txns.some(function(x){return x.date===t.date&&x.description===t.description&&Math.abs(x.amount-t.amount)<0.01;});
+    if(!exists){S.txns.push(t);added++;}
+  });
+  addPoints(added*5);checkBadges();save();
+  closeOv('ov-pdf');renderAll();
+  showToast('✅ '+added+' transações importadas!');
+  setTimeout(function(){goPage('pg-txns');},500);
 }
 
 /* PWA */
