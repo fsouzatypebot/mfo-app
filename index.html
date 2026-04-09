@@ -3088,6 +3088,20 @@ function doLogin(){
   // Load this user's data
   var userDataKey = 'mfo3_' + email.replace(/[^a-z0-9]/g,'_');
   loadUserData(userDataKey);
+  if(S.user.done){
+    document.getElementById('ob').style.display = 'none';
+    S.month = new Date().getMonth();
+    S.year  = new Date().getFullYear();
+    updateStreak(); save(); initApp();
+  } else {
+    // User registered but never finished onboarding
+    var authUser = store[email] || {};
+    var obEl = document.getElementById('ob');
+    obEl.style.display = '';
+    obEl.style.opacity = '1';
+    obEl.style.transform = 'none';
+    document.getElementById('ob-name').value = authUser.name || '';
+  }
 }
 
 function doRegister(){
@@ -3134,8 +3148,19 @@ function showOnboardingAfterAuth(name){
     updateStreak(); save(); initApp();
   } else {
     // New user — show onboarding with name pre-filled
+    S.user.name = name || '';
+    var obEl = document.getElementById('ob');
+    obEl.style.display = '';
+    obEl.style.opacity = '1';
+    obEl.style.transform = 'none';
     document.getElementById('ob-name').value = name || '';
-    // Show app (onboarding will appear on top)
+    // If name already provided from auth, skip to step 1
+    if(name){
+      document.getElementById('os0').classList.remove('on');
+      document.getElementById('os1').classList.add('on');
+      document.getElementById('d0').classList.remove('on');
+      document.getElementById('d1').classList.add('on');
+    }
   }
 }
 
