@@ -76,6 +76,115 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 .sr h3{font-size:14px;font-weight:800;color:var(--t);letter-spacing:-.1px}
 .sr .lk{font-size:12px;font-weight:700;color:var(--g);cursor:pointer}
 
+/* ══════════════ AUTH SCREEN ══════════════ */
+#auth-screen{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:600;
+  background:linear-gradient(160deg,#064e29,#16a34a 60%,#22c55e);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:0;
+  transition:opacity .4s,transform .4s;
+}
+.auth-top{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:40px 24px 16px;text-align:center;
+  position:relative;z-index:1;width:100%;
+}
+.auth-logo-wrap{
+  width:80px;height:80px;border-radius:24px;
+  background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;border:1.5px solid rgba(255,255,255,.25);
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+}
+.auth-app-name{font-size:38px;font-weight:800;color:#fff;letter-spacing:-1.5px;margin-bottom:4px;line-height:1}
+.auth-tagline{font-size:13px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.auth-headline{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.3px;line-height:1.3;margin-bottom:6px}
+.auth-sub{font-size:14px;color:rgba(255,255,255,.65);line-height:1.5}
+.auth-sheet{
+  width:100%;background:#fff;border-radius:28px 28px 0 0;
+  padding:28px 22px calc(28px + env(safe-area-inset-bottom));
+}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--s3);border-radius:12px;padding:3px;margin-bottom:22px}
+.auth-tab-btn{
+  padding:10px;border-radius:10px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;
+  background:transparent;color:var(--t3);transition:all .2s;font-family:var(--f);
+}
+.auth-tab-btn.on{background:#fff;color:var(--g);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.auth-form{display:none}
+.auth-form.on{display:block;animation:ri .25s ease both}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+.auth-field input{
+  width:100%;padding:13px 14px;
+  border:1.5px solid var(--bd);border-radius:12px;
+  font-size:15px;background:var(--bg);outline:none;
+  transition:all .2s;-webkit-appearance:none;font-family:var(--f);
+}
+.auth-field input:focus{border-color:var(--g);background:#fff;box-shadow:0 0 0 3px var(--gl)}
+.auth-field input::placeholder{color:var(--t4)}
+.auth-field .pw-wrap{position:relative}
+.auth-field .pw-wrap input{padding-right:48px}
+.pw-toggle{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:16px;color:var(--t3);padding:0;
+}
+.auth-btn{
+  width:100%;padding:15px;background:var(--g);color:#fff;
+  font-size:15px;font-weight:700;border:none;border-radius:14px;
+  cursor:pointer;font-family:var(--f);
+  box-shadow:0 4px 16px rgba(22,163,74,.3);transition:all .2s;margin-top:4px;
+}
+.auth-btn:active{transform:scale(.97)}
+.auth-error{
+  background:var(--rl);border:1px solid rgba(220,38,38,.2);
+  border-radius:10px;padding:10px 13px;
+  font-size:13px;color:var(--r);font-weight:600;
+  margin-bottom:14px;display:none;
+  animation:ri .2s ease both;
+}
+.auth-error.show{display:block}
+.auth-divider{
+  display:flex;align-items:center;gap:10px;
+  margin:16px 0;
+}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+.auth-divider span{font-size:11px;color:var(--t3);font-weight:600;white-space:nowrap}
+.auth-secure-note{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:11px;color:var(--t3);font-weight:600;margin-top:14px;
+}
+
+/* Logout modal */
+.profile-menu{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;
+  background:rgba(0,0,0,.4);backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.profile-menu.open{opacity:1;pointer-events:all}
+.pm-sheet{
+  background:var(--s);border-radius:26px 26px 0 0;
+  width:100%;max-width:480px;
+  padding:0 0 calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.profile-menu.open .pm-sheet{transform:translateY(0)}
+.pm-handle{width:38px;height:4px;border-radius:2px;background:var(--bd);margin:12px auto}
+.pm-header{padding:16px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--bd)}
+.pm-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--g),var(--gm));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0}
+.pm-name{font-size:17px;font-weight:800;color:var(--t)}
+.pm-email{font-size:12px;color:var(--t3);margin-top:2px;font-weight:500}
+.pm-row{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--s3)}
+.pm-row:last-child{border-bottom:none}
+.pm-row:hover,.pm-row:active{background:var(--s2)}
+.pm-row-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pm-row-info{flex:1}
+.pm-row-title{font-size:14px;font-weight:700;color:var(--t)}
+.pm-row-sub{font-size:11px;color:var(--t3);margin-top:1px;font-weight:500}
+.pm-row-arrow{font-size:16px;color:var(--t4)}
+
 /* ══════════════ ONBOARDING ══════════════ */
 #ob{
   position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;
@@ -652,6 +761,105 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 <body>
 <div id="shell">
 
+<!-- ══ AUTH SCREEN ══ -->
+<div id="auth-screen">
+  <div class="auth-top">
+    <div class="auth-logo-wrap">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <path d="M26 10C26 10 14 18 14 27c0 6.6 5.4 12 12 12s12-5.4 12-12c0-9-12-17-12-17z" fill="white" opacity=".9"/>
+        <path d="M26 16c0 0-7 6-7 11 0 3.9 3.1 7 7 7s7-3.1 7-7c0-5-7-11-7-11z" fill="rgba(22,163,74,.8)"/>
+        <ellipse cx="23" cy="24" rx="2.5" ry="3.5" fill="white" opacity=".5" transform="rotate(-20 23 24)"/>
+      </svg>
+    </div>
+    <div class="auth-app-name">Grão</div>
+    <div class="auth-tagline">Finanças organizadas</div>
+    <div class="auth-headline">Seu dinheiro crescendo<br>como um grão</div>
+    <p class="auth-sub">Controle total, IA financeira<br>e gamificação no seu bolso</p>
+  </div>
+  <div class="auth-sheet">
+    <div class="auth-tabs">
+      <button class="auth-tab-btn on" id="auth-tab-login" onclick="switchAuthTab('login')">Entrar</button>
+      <button class="auth-tab-btn" id="auth-tab-register" onclick="switchAuthTab('register')">Criar conta</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="auth-form on" id="auth-login">
+      <div class="auth-error" id="login-error"></div>
+      <div class="auth-field">
+        <label>E-mail</label>
+        <input id="login-email" type="email" placeholder="seu@email.com" autocomplete="email" inputmode="email"/>
+      </div>
+      <div class="auth-field">
+        <label>Senha</label>
+        <div class="pw-wrap">
+          <input id="login-pass" type="password" placeholder="Sua senha" autocomplete="current-password"/>
+          <button class="pw-toggle" type="button" onclick="togglePw('login-pass',this)">👁</button>
+        </div>
+      </div>
+      <button class="auth-btn" onclick="doLogin()">Entrar no Grão →</button>
+      <div class="auth-secure-note">🔒 Seus dados ficam apenas neste dispositivo</div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="auth-form" id="auth-register">
+      <div class="auth-error" id="reg-error"></div>
+      <div class="auth-field">
+        <label>Seu nome</label>
+        <input id="reg-name" type="text" placeholder="Ex: João, Maria..." autocomplete="given-name"/>
+      </div>
+      <div class="auth-field">
+        <label>E-mail</label>
+        <input id="reg-email" type="email" placeholder="seu@email.com" autocomplete="email" inputmode="email"/>
+      </div>
+      <div class="auth-field">
+        <label>Senha</label>
+        <div class="pw-wrap">
+          <input id="reg-pass" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
+          <button class="pw-toggle" type="button" onclick="togglePw('reg-pass',this)">👁</button>
+        </div>
+      </div>
+      <div class="auth-field">
+        <label>Confirmar senha</label>
+        <div class="pw-wrap">
+          <input id="reg-pass2" type="password" placeholder="Repita a senha" autocomplete="new-password"/>
+          <button class="pw-toggle" type="button" onclick="togglePw('reg-pass2',this)">👁</button>
+        </div>
+      </div>
+      <button class="auth-btn" onclick="doRegister()">Criar minha conta →</button>
+      <div class="auth-secure-note">🔒 Nenhum dado é enviado para a internet</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROFILE MENU ══ -->
+<div class="profile-menu" id="profile-menu" onclick="closeProfileMenu(event)">
+  <div class="pm-sheet">
+    <div class="pm-handle"></div>
+    <div class="pm-header">
+      <div class="pm-avatar" id="pm-avatar">?</div>
+      <div>
+        <div class="pm-name" id="pm-name">...</div>
+        <div class="pm-email" id="pm-email">...</div>
+      </div>
+    </div>
+    <div class="pm-row" onclick="openFaq();closeProfileMenuForce()">
+      <div class="pm-row-ic" style="background:var(--al)">💡</div>
+      <div class="pm-row-info"><div class="pm-row-title">Guia do app</div><div class="pm-row-sub">Como usar cada funcionalidade</div></div>
+      <div class="pm-row-arrow">›</div>
+    </div>
+    <div class="pm-row" onclick="goPage('pg-ach');closeProfileMenuForce()">
+      <div class="pm-row-ic" style="background:var(--al)">🏆</div>
+      <div class="pm-row-info"><div class="pm-row-title">Conquistas</div><div class="pm-row-sub">Ver pontos, nível e badges</div></div>
+      <div class="pm-row-arrow">›</div>
+    </div>
+    <div class="pm-row" onclick="confirmLogout()">
+      <div class="pm-row-ic" style="background:var(--rl)">🚪</div>
+      <div class="pm-row-info"><div class="pm-row-title" style="color:var(--r)">Sair da conta</div><div class="pm-row-sub">Você precisará fazer login novamente</div></div>
+      <div class="pm-row-arrow">›</div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ ONBOARDING ══ -->
 <div id="ob">
   <div class="ob-top">
@@ -723,7 +931,7 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
         </div>
         <div style="display:flex;align-items:center;gap:8px;position:relative;z-index:1">
           <button class="faq-hero-btn" onclick="openFaq()" title="Ajuda">?</button>
-          <div class="h-av" id="h-av">?</div>
+          <div class="h-av" id="h-av" onclick="openProfileMenu()">?</div>
         </div>
       </div>
       <div class="h-lbl">SALDO DISPONÍVEL</div>
@@ -1310,6 +1518,10 @@ function obNext(step){
 }
 function finishOb(){
   S.user.goal=obGoalVal;S.user.done=true;
+  // Update display name from auth if available
+  var email=getSession();var store=getAuthStore();
+  var authUser=store[email]||{};
+  if(!S.user.name&&authUser.name) S.user.name=authUser.name;
   var ob=document.getElementById('ob');
   ob.style.opacity='0';ob.style.transform='translateY(-20px)';ob.style.transition='all .4s ease';
   setTimeout(function(){ob.style.display='none';},400);
@@ -2380,6 +2592,212 @@ function confirmPdfImport(){
   setTimeout(function(){goPage('pg-txns');},500);
 }
 
+/* ═══════════════════════════════════
+   AUTH SYSTEM
+═══════════════════════════════════ */
+var AUTH_KEY = 'grao_auth';
+var SESSION_KEY = 'grao_session';
+
+/* Simple hash using djb2 — no server needed, purely local */
+function hashPassword(pw){
+  var hash = 5381;
+  for(var i = 0; i < pw.length; i++){
+    hash = ((hash << 5) + hash) + pw.charCodeAt(i);
+    hash = hash & hash; // force 32-bit
+  }
+  return 'h' + Math.abs(hash).toString(36) + pw.length.toString(36) + pw.charCodeAt(0).toString(36);
+}
+
+function getAuthStore(){
+  try{ var d = localStorage.getItem(AUTH_KEY); return d ? JSON.parse(d) : {}; }catch(e){ return {}; }
+}
+function saveAuthStore(store){
+  try{ localStorage.setItem(AUTH_KEY, JSON.stringify(store)); }catch(e){}
+}
+function getSession(){
+  try{ return localStorage.getItem(SESSION_KEY) || ''; }catch(e){ return ''; }
+}
+function setSession(email){
+  try{ localStorage.setItem(SESSION_KEY, email); }catch(e){}
+}
+function clearSession(){
+  try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
+}
+
+function isLoggedIn(){
+  var email = getSession();
+  if(!email) return false;
+  var store = getAuthStore();
+  return !!store[email];
+}
+
+function switchAuthTab(tab){
+  document.getElementById('auth-tab-login').classList.toggle('on', tab==='login');
+  document.getElementById('auth-tab-register').classList.toggle('on', tab==='register');
+  document.getElementById('auth-login').classList.toggle('on', tab==='login');
+  document.getElementById('auth-register').classList.toggle('on', tab==='register');
+  clearAuthErrors();
+}
+
+function clearAuthErrors(){
+  ['login-error','reg-error'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.textContent=''; el.classList.remove('show'); }
+  });
+}
+
+function showAuthError(id, msg){
+  var el = document.getElementById(id);
+  if(el){ el.textContent = msg; el.classList.add('show'); }
+}
+
+function togglePw(inputId, btn){
+  var inp = document.getElementById(inputId);
+  if(!inp) return;
+  if(inp.type === 'password'){ inp.type = 'text'; btn.textContent = '🙈'; }
+  else{ inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+function doLogin(){
+  clearAuthErrors();
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
+  var pass  = document.getElementById('login-pass').value;
+  if(!email){ showAuthError('login-error','Informe seu e-mail'); return; }
+  if(!pass){ showAuthError('login-error','Informe sua senha'); return; }
+  var store = getAuthStore();
+  var user  = store[email];
+  if(!user){ showAuthError('login-error','E-mail não encontrado. Crie uma conta primeiro.'); return; }
+  if(user.hash !== hashPassword(pass)){ showAuthError('login-error','Senha incorreta. Tente novamente.'); return; }
+  setSession(email);
+  hideAuthScreen();
+  // Load this user's data
+  var userDataKey = 'mfo3_' + email.replace(/[^a-z0-9]/g,'_');
+  loadUserData(userDataKey);
+}
+
+function doRegister(){
+  clearAuthErrors();
+  var name  = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim().toLowerCase();
+  var pass  = document.getElementById('reg-pass').value;
+  var pass2 = document.getElementById('reg-pass2').value;
+  if(!name){ showAuthError('reg-error','Informe seu nome'); return; }
+  if(!email || !email.includes('@')){ showAuthError('reg-error','Informe um e-mail válido'); return; }
+  if(pass.length < 6){ showAuthError('reg-error','A senha deve ter pelo menos 6 caracteres'); return; }
+  if(pass !== pass2){ showAuthError('reg-error','As senhas não coincidem'); return; }
+  var store = getAuthStore();
+  if(store[email]){ showAuthError('reg-error','Este e-mail já possui uma conta. Faça login.'); return; }
+  // Save user credentials
+  store[email] = { name: name, email: email, hash: hashPassword(pass), createdAt: today() };
+  saveAuthStore(store);
+  setSession(email);
+  // Pre-fill name in state
+  S.user.name = name;
+  hideAuthScreen();
+  // Show onboarding (skip name step since we already have it)
+  showOnboardingAfterAuth(name);
+}
+
+function hideAuthScreen(){
+  var as = document.getElementById('auth-screen');
+  as.style.opacity = '0';
+  as.style.transform = 'translateY(-20px)';
+  as.style.transition = 'all .4s ease';
+  setTimeout(function(){ as.style.display = 'none'; }, 400);
+}
+
+function showOnboardingAfterAuth(name){
+  // If user has existing data (already onboarded), skip onboarding
+  var email = getSession();
+  var userDataKey = 'mfo3_' + email.replace(/[^a-z0-9]/g,'_');
+  loadUserData(userDataKey);
+  if(S.user.done){
+    // Already onboarded — go straight to app
+    document.getElementById('ob').style.display = 'none';
+    S.month = new Date().getMonth();
+    S.year  = new Date().getFullYear();
+    updateStreak(); save(); initApp();
+  } else {
+    // New user — show onboarding with name pre-filled
+    document.getElementById('ob-name').value = name || '';
+    // Show app (onboarding will appear on top)
+  }
+}
+
+function loadUserData(key){
+  try{
+    var raw = localStorage.getItem(key);
+    if(!raw){ return; } // no data yet — fresh user
+    var p = JSON.parse(raw);
+    if(!p || typeof p !== 'object') return;
+    if(p.user && typeof p.user === 'object'){
+      S.user.name    = p.user.name    || '';
+      S.user.income  = p.user.income  || 0;
+      S.user.goal    = p.user.goal    || 'controle';
+      S.user.done    = p.user.done    === true;
+    }
+    if(Array.isArray(p.txns))   S.txns   = p.txns;
+    if(Array.isArray(p.goals))  S.goals  = p.goals;
+    if(Array.isArray(p.cards))  S.cards  = p.cards;
+    if(Array.isArray(p.badges)) S.badges = p.badges;
+    if(typeof p.hidden  === 'boolean') S.hidden  = p.hidden;
+    if(typeof p.streak  === 'number')  S.streak  = p.streak;
+    if(typeof p.lastDate === 'string') S.lastDate = p.lastDate;
+    if(typeof p.points  === 'number')  S.points  = p.points;
+    S.charts = {};
+  }catch(e){ console.error('loadUserData error:', e); }
+}
+
+/* Override save to use per-user key */
+function getUserDataKey(){
+  var email = getSession();
+  if(!email) return 'mfo3';
+  return 'mfo3_' + email.replace(/[^a-z0-9]/g,'_');
+}
+
+/* Profile menu */
+function openProfileMenu(){
+  var email = getSession();
+  var store = getAuthStore();
+  var user  = store[email] || {};
+  var name  = S.user.name || user.name || '?';
+  document.getElementById('pm-avatar').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('pm-name').textContent   = name;
+  document.getElementById('pm-email').textContent  = email || '';
+  document.getElementById('profile-menu').classList.add('open');
+}
+
+function closeProfileMenu(e){
+  if(e && e.target !== document.getElementById('profile-menu')) return;
+  document.getElementById('profile-menu').classList.remove('open');
+}
+
+function closeProfileMenuForce(){
+  document.getElementById('profile-menu').classList.remove('open');
+}
+
+function confirmLogout(){
+  if(confirm('Sair da conta? Você precisará fazer login novamente na próxima vez.')){
+    doLogout();
+  }
+}
+
+function doLogout(){
+  save(); // save before logout
+  clearSession();
+  // Reset in-memory state
+  S = {
+    user:{name:'',income:0,goal:'controle',done:false},
+    txns:[],goals:[],cards:[],
+    hidden:false,month:new Date().getMonth(),year:new Date().getFullYear(),
+    filter:'all',selCat:'Alimentação',txnType:'expense',selIco:'🏖️',
+    streak:0,lastDate:'',points:0,badges:[],
+    charts:{}
+  };
+  // Reload page cleanly
+  window.location.reload();
+}
+
 /* PWA */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('data:application/javascript,').catch(function(){});
@@ -2393,14 +2811,43 @@ window.addEventListener('pagehide',function(){ save(); });
 window.addEventListener('beforeunload',function(){ save(); });
 
 /* BOOT */
-load();
-if(S.user.done){
-  document.getElementById('ob').style.display='none';
-  S.month=new Date().getMonth();
-  S.year=new Date().getFullYear();
-  updateStreak();
-  save(); // re-save after streak update so it persists
-  initApp();
+// Override save to use per-user storage key
+var _origSave = save;
+save = function(){
+  try{
+    var toSave = {
+      user:S.user, txns:S.txns, goals:S.goals, cards:S.cards,
+      hidden:S.hidden, streak:S.streak, lastDate:S.lastDate,
+      points:S.points, badges:S.badges
+    };
+    var json = JSON.stringify(toSave);
+    var key  = getUserDataKey();
+    localStorage.setItem(key, json);
+  }catch(e){
+    console.error('MFO save error:', e);
+    try{
+      var key2 = getUserDataKey();
+      localStorage.setItem(key2, JSON.stringify({user:S.user,txns:S.txns,goals:S.goals,cards:S.cards,hidden:S.hidden,streak:S.streak,lastDate:S.lastDate,points:S.points,badges:S.badges}));
+    }catch(e2){}
+  }
+};
+
+if(isLoggedIn()){
+  // User already has a valid session — skip auth screen
+  var _email = getSession();
+  var _key   = 'mfo3_' + _email.replace(/[^a-z0-9]/g,'_');
+  document.getElementById('auth-screen').style.display = 'none';
+  loadUserData(_key);
+  if(S.user.done){
+    document.getElementById('ob').style.display = 'none';
+    S.month = new Date().getMonth();
+    S.year  = new Date().getFullYear();
+    updateStreak(); save(); initApp();
+  }
+  // else: onboarding will show automatically
+} else {
+  // Not logged in — show auth screen, hide onboarding
+  document.getElementById('ob').style.display = 'none';
 }
 </script>
 </body>
