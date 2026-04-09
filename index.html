@@ -477,6 +477,28 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 .empty-ti{font-size:17px;font-weight:800;color:var(--t);margin-bottom:6px}
 .empty-sb{font-size:13px;color:var(--t3);line-height:1.6}
 /* ══════════════ PDF IMPORT ══════════════ */
+/* ── Import format toggle ── */
+.import-fmt-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.import-fmt-btn{border:2px solid var(--bd);border-radius:14px;padding:12px;cursor:pointer;transition:all .2s;background:var(--s);display:flex;align-items:center;gap:10px;position:relative}
+.import-fmt-btn.on{border-color:var(--g);background:var(--gl)}
+.import-fmt-btn:active{transform:scale(.96)}
+.ifb-icon{font-size:22px;flex-shrink:0}
+.ifb-title{font-size:13px;font-weight:800;color:var(--t)}
+.ifb-sub{font-size:10px;color:var(--t3);font-weight:600;margin-top:1px}
+.ifb-badge{position:absolute;top:-8px;right:8px;background:var(--g);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.3px;white-space:nowrap}
+.fmt-info-box{border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.fmt-info-green{background:var(--gl);border:1px solid rgba(22,163,74,.2)}
+.fmt-info-blue{background:var(--bl);border:1px solid rgba(37,99,235,.15)}
+.fi-title{font-size:13px;font-weight:800;color:var(--gd);margin-bottom:5px}
+.fmt-info-blue .fi-title{color:var(--b)}
+.fi-body{font-size:12px;color:var(--g);line-height:1.55;font-weight:500}
+.fmt-info-blue .fi-body{color:var(--b)}
+.fmt-howto{margin-bottom:12px}
+.fh-title{font-size:11px;font-weight:800;color:var(--t2);margin-bottom:8px;letter-spacing:.2px;text-transform:uppercase}
+.fh-item{font-size:12px;color:var(--t2);padding:6px 0;border-bottom:1px solid var(--s3);display:flex;align-items:flex-start;gap:8px;line-height:1.4}
+.fh-item:last-child{border-bottom:none}
+.fh-bank{font-weight:700;color:var(--t);min-width:90px;flex-shrink:0}
+/* ──────────────────────────────── */
 .pdf-banner{
   margin:12px 16px 0;
   background:linear-gradient(135deg,#eff6ff,var(--bl));
@@ -654,7 +676,7 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
     <div class="qa-grid">
       <div class="qa" onclick="openTxn('expense')"><div class="qa-ic" style="background:#fee2e2">💸</div><div class="qa-lb">Gasto</div></div>
       <div class="qa" onclick="openTxn('income')"><div class="qa-ic" style="background:#dcfce7">💰</div><div class="qa-lb">Entrada</div></div>
-      <div class="qa" onclick="openPdfImport()"><div class="qa-ic" style="background:#dbeafe">📄</div><div class="qa-lb">Importar PDF</div></div>
+      <div class="qa" onclick="openPdfImport()"><div class="qa-ic" style="background:#dbeafe">📂</div><div class="qa-lb">Importar extrato</div></div>
       <div class="qa" onclick="goPage('pg-ai')"><div class="qa-ic" style="background:#ede9fe">🤖</div><div class="qa-lb">Finn IA</div></div>
     </div>
 
@@ -693,7 +715,7 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
       <div class="ph-row">
         <div><div class="ptitle">Transações</div><div class="ph-sub" id="txn-sub">...</div></div>
         <div style="display:flex;gap:8px">
-          <button class="ph-btn" style="background:var(--bl);color:var(--b)" onclick="openPdfImport()">📄 PDF</button>
+          <button class="ph-btn" style="background:var(--bl);color:var(--b)" onclick="openPdfImport()">📂 Extrato</button>
           <button class="ph-btn" onclick="openTxn('expense')">+ Adicionar</button>
         </div>
       </div>
@@ -701,10 +723,10 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
     <!-- PDF import banner -->
     <div class="pdf-banner" onclick="openPdfImport()">
       <div class="pdf-banner-left">
-        <div class="pdf-banner-ic">📄</div>
+        <div class="pdf-banner-ic">📂</div>
         <div>
           <div class="pdf-banner-title">Importar extrato bancário</div>
-          <div class="pdf-banner-sub">Nubank, Itaú, Bradesco, C6 e mais</div>
+          <div class="pdf-banner-sub">OFX, QFX ou PDF — Nubank, Itaú, Bradesco e mais</div>
         </div>
       </div>
       <div class="pdf-banner-arrow">→</div>
@@ -910,49 +932,86 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 </div>
 
 <!-- ══ MODAL: PDF IMPORT ══ -->
-<input type="file" id="pdf-input" accept=".pdf,application/pdf" style="display:none" onchange="handlePdfFile(this)"/>
+<input type="file" id="pdf-input" accept=".pdf,.ofx,.qfx,application/pdf" style="display:none" onchange="handleImportFile(this)"/>
 <div class="overlay" id="ov-pdf">
   <div class="sheet">
     <div class="sh-handle"></div>
     <div class="sh-hdr">
-      <div class="sh-title">📄 Importar extrato PDF</div>
+      <div class="sh-title">📂 Importar extrato bancário</div>
       <button class="sh-close" onclick="closeOv('ov-pdf')">✕</button>
     </div>
     <div class="sh-body">
       <!-- Step 1: Upload -->
       <div id="pdf-step1">
-        <div class="pdf-drop-zone" onclick="document.getElementById('pdf-input').click()" id="pdf-drop">
-          <div class="pdz-icon">📂</div>
-          <div class="pdz-title">Toque para selecionar o PDF</div>
-          <div class="pdz-sub">Extrato do Nubank, Itaú, Bradesco,<br>Santander, C6, BB e outros bancos</div>
-          <div class="pdz-hint">O arquivo é lido no seu celular — nada é enviado para servidores</div>
+        <!-- Format toggle -->
+        <div class="import-fmt-row">
+          <div class="import-fmt-btn on" id="fmt-ofx" onclick="setImportFmt('ofx',this)">
+            <div class="ifb-icon">⚡</div>
+            <div>
+              <div class="ifb-title">OFX / QFX</div>
+              <div class="ifb-sub">Mais preciso</div>
+            </div>
+            <div class="ifb-badge">Recomendado</div>
+          </div>
+          <div class="import-fmt-btn" id="fmt-pdf" onclick="setImportFmt('pdf',this)">
+            <div class="ifb-icon">📄</div>
+            <div>
+              <div class="ifb-title">PDF</div>
+              <div class="ifb-sub">Extrato em PDF</div>
+            </div>
+          </div>
         </div>
-        <div class="pdf-banks">
-          <div class="pdf-bank-chip">🟣 Nubank</div>
-          <div class="pdf-bank-chip">🔵 Itaú</div>
-          <div class="pdf-bank-chip">🔴 Bradesco</div>
-          <div class="pdf-bank-chip">🟠 Santander</div>
-          <div class="pdf-bank-chip">⚫ C6 Bank</div>
-          <div class="pdf-bank-chip">🔵 Banco do Brasil</div>
-          <div class="pdf-bank-chip">🟢 Inter</div>
-          <div class="pdf-bank-chip">+ outros</div>
+
+        <!-- OFX info -->
+        <div id="fmt-info-ofx">
+          <div class="fmt-info-box fmt-info-green">
+            <div class="fi-title">✅ Por que OFX é melhor?</div>
+            <div class="fi-body">O OFX é um arquivo de dados estruturados — como uma planilha. Cada transação tem data, valor e descrição exatos, sem erros de interpretação. É o formato mais preciso.</div>
+          </div>
+          <div class="fmt-howto">
+            <div class="fh-title">Como exportar o OFX no seu banco:</div>
+            <div class="fh-item"><span class="fh-bank">🟣 Nubank</span>Perfil → Meu extrato → Exportar → OFX</div>
+            <div class="fh-item"><span class="fh-bank">🔵 Itaú</span>Extrato → Exportar dados → Formato OFX</div>
+            <div class="fh-item"><span class="fh-bank">🔴 Bradesco</span>Extrato → Salvar extrato → OFX / Money</div>
+            <div class="fh-item"><span class="fh-bank">🟠 Santander</span>Internet Banking → Extrato → Exportar OFX</div>
+            <div class="fh-item"><span class="fh-bank">🟢 Inter</span>Extrato → Exportar → OFX</div>
+            <div class="fh-item"><span class="fh-bank">⚫ C6 Bank</span>Extrato → Baixar → OFX</div>
+            <div class="fh-item"><span class="fh-bank">🔵 BB</span>Banco do Brasil → Extrato → Exportar OFX</div>
+          </div>
+        </div>
+
+        <!-- PDF info -->
+        <div id="fmt-info-pdf" style="display:none">
+          <div class="fmt-info-box fmt-info-blue">
+            <div class="fi-title">📄 Extrato em PDF</div>
+            <div class="fi-body">O app lê o texto do PDF e identifica as transações automaticamente. Funciona melhor com PDFs gerados pelo app do banco (não escaneados).</div>
+          </div>
+        </div>
+
+        <div class="pdf-drop-zone" onclick="document.getElementById('pdf-input').click()" id="pdf-drop">
+          <div class="pdz-icon" id="pdz-icon">⚡</div>
+          <div class="pdz-title" id="pdz-title">Toque para selecionar o arquivo OFX</div>
+          <div class="pdz-sub" id="pdz-sub">Arquivo .ofx ou .qfx exportado pelo seu banco</div>
+          <div class="pdz-hint">🔒 Lido no seu celular — nada é enviado para servidores</div>
         </div>
       </div>
+
       <!-- Step 2: Processing -->
       <div id="pdf-step2" style="display:none">
         <div class="pdf-loading">
           <div class="pdf-spinner"></div>
-          <div class="pdf-loading-title">Lendo seu extrato...</div>
-          <div class="pdf-loading-sub" id="pdf-progress-text">Extraindo texto do PDF</div>
+          <div class="pdf-loading-title" id="pdf-loading-title">Lendo seu extrato...</div>
+          <div class="pdf-loading-sub" id="pdf-progress-text">Processando arquivo</div>
           <div class="pdf-progress-bar"><div class="pdf-progress-fill" id="pdf-progress-fill" style="width:0%"></div></div>
         </div>
       </div>
+
       <!-- Step 3: Preview -->
       <div id="pdf-step3" style="display:none">
         <div class="pdf-result-header">
           <div class="pdf-result-stats" id="pdf-result-stats"></div>
           <div class="pdf-select-all">
-            <span style="font-size:12px;color:var(--t2);font-weight:600">Selecionar tudo</span>
+            <span style="font-size:12px;color:var(--t2);font-weight:600">Tudo</span>
             <input type="checkbox" id="pdf-select-all" onchange="pdfToggleAll(this.checked)" checked style="width:18px;height:18px;accent-color:var(--g);cursor:pointer"/>
           </div>
         </div>
@@ -961,12 +1020,13 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
           <button class="sb2" id="pdf-import-btn" onclick="confirmPdfImport()">Importar transações selecionadas</button>
         </div>
       </div>
+
       <!-- Step 4: Error -->
       <div id="pdf-step4" style="display:none">
         <div class="empty">
           <div class="empty-ic">😕</div>
-          <div class="empty-ti">Não consegui ler este PDF</div>
-          <div class="empty-sb" id="pdf-error-msg">Tente exportar o extrato diretamente pelo app do banco, no formato PDF.</div>
+          <div class="empty-ti">Não consegui ler o arquivo</div>
+          <div class="empty-sb" id="pdf-error-msg">Tente exportar novamente pelo app do banco.</div>
           <button class="sb2" style="margin-top:16px" onclick="resetPdfImport()">Tentar outro arquivo</button>
         </div>
       </div>
@@ -1026,9 +1086,69 @@ var S={
 };
 var obGoalVal='dividas';
 
-/* PERSIST */
-function save(){try{localStorage.setItem('mfo3',JSON.stringify(S));}catch(e){}}
-function load(){try{var d=localStorage.getItem('mfo3');if(d){var p=JSON.parse(d);Object.assign(S,p);S.charts={};}}catch(e){}}
+/* ═══════════════════════════════════
+   PERSIST — ROBUST VERSION
+═══════════════════════════════════ */
+function save(){
+  try{
+    // NEVER include charts — they have circular refs that break JSON.stringify
+    var toSave={
+      user:S.user,
+      txns:S.txns,
+      goals:S.goals,
+      cards:S.cards,
+      hidden:S.hidden,
+      streak:S.streak,
+      lastDate:S.lastDate,
+      points:S.points,
+      badges:S.badges
+      // month/year/filter/selCat intentionally excluded — reset on open
+    };
+    var json=JSON.stringify(toSave);
+    localStorage.setItem('mfo3',json);
+    // Verify the write actually worked
+    var verify=localStorage.getItem('mfo3');
+    if(!verify||verify.length<10){
+      console.warn('MFO: save verification failed');
+    }
+  }catch(e){
+    console.error('MFO save error:',e);
+    // If localStorage is full, try to clear old keys and retry
+    try{
+      var keys=Object.keys(localStorage);
+      keys.forEach(function(k){if(k!=='mfo3')localStorage.removeItem(k);});
+      localStorage.setItem('mfo3',JSON.stringify({user:S.user,txns:S.txns,goals:S.goals,cards:S.cards,hidden:S.hidden,streak:S.streak,lastDate:S.lastDate,points:S.points,badges:S.badges}));
+    }catch(e2){console.error('MFO save retry failed:',e2);}
+  }
+}
+
+function load(){
+  try{
+    var raw=localStorage.getItem('mfo3');
+    if(!raw) return;
+    var p=JSON.parse(raw);
+    if(!p||typeof p!=='object') return;
+    // Deep merge each key individually — never overwrite with undefined
+    if(p.user&&typeof p.user==='object'){
+      S.user.name=p.user.name||'';
+      S.user.income=p.user.income||0;
+      S.user.goal=p.user.goal||'controle';
+      S.user.done=p.user.done===true;
+    }
+    if(Array.isArray(p.txns)) S.txns=p.txns;
+    if(Array.isArray(p.goals)) S.goals=p.goals;
+    if(Array.isArray(p.cards)) S.cards=p.cards;
+    if(Array.isArray(p.badges)) S.badges=p.badges;
+    if(typeof p.hidden==='boolean') S.hidden=p.hidden;
+    if(typeof p.streak==='number') S.streak=p.streak;
+    if(typeof p.lastDate==='string') S.lastDate=p.lastDate;
+    if(typeof p.points==='number') S.points=p.points;
+    S.charts={}; // always clear charts on load
+  }catch(e){
+    console.error('MFO load error:',e);
+    // Don't crash — just start fresh
+  }
+}
 
 /* HELPERS */
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
@@ -1700,8 +1820,177 @@ function animNums(){
 
 
 /* ═══════════════════════════════════
-   PDF IMPORT ENGINE
+   OFX / QFX PARSER
 ═══════════════════════════════════ */
+function parseOFX(text){
+  var txns=[];
+  // OFX can be SGML or XML — handle both
+  // Strip SGML headers (lines before <OFX> or <ofx>)
+  var ofxStart=text.indexOf('<OFX>');
+  if(ofxStart===-1) ofxStart=text.indexOf('<ofx>');
+  if(ofxStart===-1) ofxStart=0;
+  var body=text.slice(ofxStart);
+
+  // Find all STMTTRN blocks
+  var blockRe=/<STMTTRN>([\s\S]*?)<\/STMTTRN>/gi;
+  var block;
+  while((block=blockRe.exec(body))!==null){
+    var raw=block[1];
+    var get=function(tag){
+      var r=new RegExp('<'+tag+'>([^<\\n\\r]+)','i');
+      var m=raw.match(r);
+      return m?m[1].trim():'';
+    };
+    var dtRaw=get('DTPOSTED')||get('DTAVAIL')||'';
+    var amtRaw=get('TRNAMT');
+    var memo=get('MEMO')||get('NAME')||get('FITID')||'Transação';
+    var trntype=get('TRNTYPE').toUpperCase();
+
+    // Parse OFX date: YYYYMMDDHHMMSS or YYYYMMDD
+    var dt=today();
+    if(dtRaw.length>=8){
+      var yr=dtRaw.slice(0,4),mo=dtRaw.slice(4,6),dy=dtRaw.slice(6,8);
+      dt=yr+'-'+mo+'-'+dy;
+    }
+    var amount=parseFloat(amtRaw)||0;
+    if(Math.abs(amount)<0.01) continue;
+
+    // Determine type: OFX TRNTYPE or sign of amount
+    var type='expense';
+    if(amount>0||['CREDIT','INT','DIV','DEP','DIRECTDEP','XFER'].indexOf(trntype)>=0) type='income';
+    if(amount<0||['DEBIT','CHECK','PAYMENT','ATM','POS','REPEATPMT','FEE'].indexOf(trntype)>=0) type='expense';
+
+    // Clean memo
+    memo=memo.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+
+    txns.push({
+      id:uid(),date:dt,
+      description:memo,
+      amount:Math.abs(amount),
+      type:type,
+      category:catFromDesc(memo)
+    });
+  }
+
+  // Also try SGML flat format (no closing tags)
+  if(txns.length===0){
+    var lines=text.split(/\r?\n/);
+    var cur={};var inTxn=false;
+    lines.forEach(function(line){
+      var l=line.trim();
+      if(l==='<STMTTRN>'||l.toUpperCase()==='<STMTTRN>'){inTxn=true;cur={};}
+      else if(l==='</STMTTRN>'||l.toUpperCase()==='</STMTTRN>'){
+        inTxn=false;
+        if(cur.amt!==undefined&&cur.dt){
+          var amount2=parseFloat(cur.amt)||0;if(Math.abs(amount2)<0.01)return;
+          var yr2=cur.dt.slice(0,4),mo2=cur.dt.slice(4,6),dy2=cur.dt.slice(6,8);
+          var desc2=(cur.memo||cur.name||'Transação').replace(/&amp;/g,'&');
+          var type2=amount2>0?'income':'expense';
+          txns.push({id:uid(),date:yr2+'-'+mo2+'-'+dy2,description:desc2,amount:Math.abs(amount2),type:type2,category:catFromDesc(desc2)});
+        }
+      } else if(inTxn){
+        var kv=l.match(/^<([^>]+)>(.+)$/);
+        if(kv){
+          var k=kv[1].toUpperCase(),v=kv[2].trim();
+          if(k==='DTPOSTED'||k==='DTAVAIL') cur.dt=v;
+          else if(k==='TRNAMT') cur.amt=v;
+          else if(k==='MEMO') cur.memo=v;
+          else if(k==='NAME') cur.name=v;
+        }
+      }
+    });
+  }
+
+  // Fix income categories
+  txns.forEach(function(t){if(t.type==='income'&&t.category==='Outros')t.category='Salário';});
+  return txns.sort(function(a,b){return b.date.localeCompare(a.date);});
+}
+
+/* ═══════════════════════════════════
+   FORMAT TOGGLE UI
+═══════════════════════════════════ */
+var currentImportFmt='ofx';
+function setImportFmt(fmt,el){
+  currentImportFmt=fmt;
+  document.querySelectorAll('.import-fmt-btn').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  document.getElementById('fmt-info-ofx').style.display=fmt==='ofx'?'block':'none';
+  document.getElementById('fmt-info-pdf').style.display=fmt==='pdf'?'block':'none';
+  var accept=fmt==='ofx'?'.ofx,.qfx':'.pdf,application/pdf';
+  document.getElementById('pdf-input').setAttribute('accept',accept+','+accept);
+  document.getElementById('pdz-icon').textContent=fmt==='ofx'?'⚡':'📄';
+  document.getElementById('pdz-title').textContent=fmt==='ofx'?'Toque para selecionar o arquivo OFX':'Toque para selecionar o PDF';
+  document.getElementById('pdz-sub').textContent=fmt==='ofx'?'Arquivo .ofx ou .qfx exportado pelo seu banco':'Extrato em PDF gerado pelo app do banco';
+}
+
+/* ── UNIFIED FILE HANDLER ── */
+async function handleImportFile(input){
+  var file=input.files[0];if(!file)return;
+  var name=file.name.toLowerCase();
+  var isOFX=name.endsWith('.ofx')||name.endsWith('.qfx');
+  var isPDF=name.endsWith('.pdf')||file.type==='application/pdf';
+
+  // Auto-detect even if user picked wrong mode
+  if(!isOFX&&!isPDF){
+    // Try to read first bytes to detect
+    var peek=await file.slice(0,200).text();
+    isOFX=peek.includes('OFXHEADER')||peek.includes('<OFX>')||peek.includes('<ofx>');
+    isPDF=peek.startsWith('%PDF');
+    if(!isOFX&&!isPDF){document.getElementById('pdf-error-msg').textContent='Formato não reconhecido. Use um arquivo .ofx, .qfx ou .pdf.';showPdfStep(4);return;}
+  }
+
+  showPdfStep(2);
+  document.getElementById('pdf-loading-title').textContent=isOFX?'Lendo arquivo OFX...':'Lendo PDF...';
+  setPdfProgress(15,isOFX?'Decodificando arquivo OFX...':'Carregando PDF...');
+
+  try{
+    if(isOFX){
+      // OFX is plain text
+      var text=await file.text();
+      setPdfProgress(60,'Identificando transações...');
+      var parsed=parseOFX(text);
+      setPdfProgress(100,'Concluído!');
+      if(!parsed.length){
+        document.getElementById('pdf-error-msg').textContent='Nenhuma transação encontrada no arquivo OFX. Verifique se exportou o extrato (não apenas o saldo) e tente novamente.';
+        showPdfStep(4);return;
+      }
+      pdfParsed=parsed;pdfSelected=parsed.map(function(t){return t.id;});
+      renderPdfPreview();showPdfStep(3);
+    } else {
+      // PDF path (existing logic)
+      if(!window.pdfjsLib)throw new Error('Biblioteca PDF não carregou. Verifique sua conexão.');
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      var buf=await file.arrayBuffer();
+      setPdfProgress(25,'Abrindo arquivo...');
+      var pdfDoc=await pdfjsLib.getDocument({data:buf}).promise;
+      var numPages=pdfDoc.numPages;var fullText='';
+      for(var p=1;p<=numPages;p++){
+        setPdfProgress(25+Math.round((p/numPages)*55),'Lendo página '+p+' de '+numPages+'...');
+        var page=await pdfDoc.getPage(p);
+        var content=await page.getTextContent();
+        var items=content.items.slice().sort(function(a,b){var dy=Math.abs(b.transform[5]-a.transform[5]);if(dy>3)return b.transform[5]-a.transform[5];return a.transform[4]-b.transform[4];});
+        var prevY=null;
+        items.forEach(function(item){
+          if(!item.str.trim())return;
+          var y=Math.round(item.transform[5]);
+          if(prevY!==null&&Math.abs(y-prevY)>3)fullText+='\n';else if(prevY!==null)fullText+=' ';
+          fullText+=item.str;prevY=y;
+        });
+        fullText+='\n';
+      }
+      setPdfProgress(85,'Identificando transações...');
+      var parsed2=parseStatement(fullText);
+      setPdfProgress(100,'Concluído!');
+      if(!parsed2.length){document.getElementById('pdf-error-msg').textContent='Não encontrei transações neste PDF. Tente exportar o extrato pelo app do banco em formato PDF de texto (não escaneado).';showPdfStep(4);return;}
+      pdfParsed=parsed2;pdfSelected=parsed2.map(function(t){return t.id;});
+      renderPdfPreview();showPdfStep(3);
+    }
+  }catch(e){
+    console.error(e);
+    document.getElementById('pdf-error-msg').textContent='Erro: '+(e.message||'formato não suportado')+'. Certifique-se que o arquivo não está protegido por senha.';
+    showPdfStep(4);
+  }
+}
 var pdfParsed=[];var pdfSelected=[];
 var CAT_KEYWORDS={
   'Alimentação':['ifood','rappi','uber eats','mcdonalds','mc donalds','burguer','burger','pizza','subway','outback','churrascaria','restaurante','padaria','lanchonete','acai','acaí','hortifruti','supermercado','mercado','extra','carrefour','pao de acucar','assai','atacadao'],
@@ -1777,47 +2066,21 @@ function parseStatement(text){
   txns.forEach(function(t){t.id=uid();t.category=catFromDesc(t.description);if(t.type==='income'&&t.category==='Outros')t.category='Salário';});
   return txns.sort(function(a,b){return b.date.localeCompare(a.date);});
 }
-function openPdfImport(){resetPdfImport();openOv('ov-pdf');}
+function openPdfImport(){
+  resetPdfImport();
+  // Reset format toggle to OFX
+  currentImportFmt='ofx';
+  document.querySelectorAll('.import-fmt-btn').forEach(function(b){b.classList.remove('on');});
+  var ofxBtn=document.getElementById('fmt-ofx');if(ofxBtn)ofxBtn.classList.add('on');
+  document.getElementById('fmt-info-ofx').style.display='block';
+  document.getElementById('fmt-info-pdf').style.display='none';
+  document.getElementById('pdf-input').setAttribute('accept','.ofx,.qfx,.pdf,application/pdf');
+  openOv('ov-pdf');
+}
 function resetPdfImport(){showPdfStep(1);document.getElementById('pdf-input').value='';pdfParsed=[];pdfSelected=[];document.getElementById('pdf-progress-fill').style.width='0%';}
 function showPdfStep(n){[1,2,3,4].forEach(function(i){var el=document.getElementById('pdf-step'+i);if(el)el.style.display=i===n?'block':'none';});}
 function setPdfProgress(pct,msg){document.getElementById('pdf-progress-fill').style.width=pct+'%';if(msg)document.getElementById('pdf-progress-text').textContent=msg;}
 
-async function handlePdfFile(input){
-  var file=input.files[0];if(!file)return;
-  showPdfStep(2);setPdfProgress(10,'Carregando PDF...');
-  try{
-    if(!window.pdfjsLib)throw new Error('Biblioteca PDF não carregou. Verifique sua conexão.');
-    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    var buf=await file.arrayBuffer();
-    setPdfProgress(25,'Abrindo arquivo...');
-    var pdfDoc=await pdfjsLib.getDocument({data:buf}).promise;
-    var numPages=pdfDoc.numPages;var fullText='';
-    for(var p=1;p<=numPages;p++){
-      setPdfProgress(25+Math.round((p/numPages)*55),'Lendo página '+p+' de '+numPages+'...');
-      var page=await pdfDoc.getPage(p);
-      var content=await page.getTextContent();
-      var items=content.items.slice().sort(function(a,b){var dy=Math.abs(b.transform[5]-a.transform[5]);if(dy>3)return b.transform[5]-a.transform[5];return a.transform[4]-b.transform[4];});
-      var prevY=null;
-      items.forEach(function(item){
-        if(!item.str.trim())return;
-        var y=Math.round(item.transform[5]);
-        if(prevY!==null&&Math.abs(y-prevY)>3)fullText+='\n';else if(prevY!==null)fullText+=' ';
-        fullText+=item.str;prevY=y;
-      });
-      fullText+='\n';
-    }
-    setPdfProgress(85,'Identificando transações...');
-    var parsed=parseStatement(fullText);
-    setPdfProgress(100,'Concluído!');
-    if(!parsed.length){document.getElementById('pdf-error-msg').textContent='Não encontrei transações neste PDF. Tente exportar o extrato completo pelo app do banco em PDF de texto (não escaneado).';showPdfStep(4);return;}
-    pdfParsed=parsed;pdfSelected=parsed.map(function(t){return t.id;});
-    renderPdfPreview();showPdfStep(3);
-  }catch(e){
-    console.error(e);
-    document.getElementById('pdf-error-msg').textContent='Erro: '+(e.message||'formato não suportado')+'. Certifique-se que o PDF não está com senha.';
-    showPdfStep(4);
-  }
-}
 
 function renderPdfPreview(){
   var total=pdfParsed.length;
@@ -1873,12 +2136,22 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('data:application/javascript,').catch(function(){});
 }
 
+/* Auto-save when app goes to background or tab closes */
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='hidden') save();
+});
+window.addEventListener('pagehide',function(){ save(); });
+window.addEventListener('beforeunload',function(){ save(); });
+
 /* BOOT */
 load();
 if(S.user.done){
   document.getElementById('ob').style.display='none';
-  S.month=new Date().getMonth();S.year=new Date().getFullYear();
-  updateStreak();initApp();
+  S.month=new Date().getMonth();
+  S.year=new Date().getFullYear();
+  updateStreak();
+  save(); // re-save after streak update so it persists
+  initApp();
 }
 </script>
 </body>
