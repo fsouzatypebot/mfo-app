@@ -476,7 +476,100 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
 .empty-ic{font-size:52px;margin-bottom:14px}
 .empty-ti{font-size:17px;font-weight:800;color:var(--t);margin-bottom:6px}
 .empty-sb{font-size:13px;color:var(--t3);line-height:1.6}
-/* ══════════════ PDF IMPORT ══════════════ */
+/* ══════════════ FAQ / HELP ══════════════ */
+.faq-hero-btn{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.25);
+  color:#fff;font-size:15px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.faq-hero-btn:active{background:rgba(255,255,255,.35)}
+.help-strip{
+  margin:14px 16px 4px;
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border:1.5px solid rgba(217,119,6,.2);
+  border-radius:14px;padding:13px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .18s;
+}
+.help-strip:active{transform:scale(.98)}
+.hs-left{display:flex;align-items:center;gap:11px}
+.hs-ic{width:36px;height:36px;border-radius:10px;background:rgba(217,119,6,.12);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hs-title{font-size:13px;font-weight:800;color:#92400e}
+.hs-sub{font-size:11px;color:#b45309;margin-top:2px;font-weight:500}
+.hs-arrow{font-size:20px;color:#d97706;font-weight:700}
+
+/* FAQ MODAL */
+.faq-tabs{
+  display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--bd);
+  padding:0 16px;background:var(--s);flex-shrink:0;
+}
+.faq-tabs::-webkit-scrollbar{display:none}
+.faq-tab{
+  padding:11px 13px;font-size:12px;font-weight:700;color:var(--t3);
+  cursor:pointer;white-space:nowrap;border-bottom:2.5px solid transparent;
+  transition:all .18s;flex-shrink:0;
+}
+.faq-tab.on{color:var(--g);border-bottom-color:var(--g)}
+.faq-section-title{
+  font-size:18px;font-weight:800;color:var(--t);
+  letter-spacing:-.3px;margin-bottom:4px;
+}
+.faq-section-sub{font-size:13px;color:var(--t3);margin-bottom:20px;line-height:1.5}
+.faq-item{margin-bottom:12px;border:1.5px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--s);transition:all .2s}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 16px;cursor:pointer;
+  font-size:14px;font-weight:700;color:var(--t);
+  gap:10px;
+}
+.faq-q:active{background:var(--s2)}
+.faq-q-icon{font-size:18px;flex-shrink:0;width:32px;text-align:center}
+.faq-q-text{flex:1;line-height:1.35}
+.faq-chevron{color:var(--t3);font-size:16px;flex-shrink:0;transition:transform .25s;font-weight:600}
+.faq-item.open .faq-chevron{transform:rotate(90deg)}
+.faq-a{
+  display:none;padding:0 16px 16px;
+  font-size:13px;color:var(--t2);line-height:1.7;
+}
+.faq-item.open .faq-a{display:block;animation:ri .22s ease both}
+.faq-a p{margin-bottom:10px}
+.faq-a p:last-child{margin-bottom:0}
+.faq-a strong{color:var(--t);font-weight:700}
+.faq-a .faq-tip{
+  background:var(--gl);border:1px solid rgba(22,163,74,.2);
+  border-radius:10px;padding:10px 13px;margin-top:10px;
+  font-size:12px;color:var(--gd);font-weight:600;line-height:1.5;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.faq-a .faq-tip::before{content:'💡';flex-shrink:0}
+.faq-a .faq-warn{
+  background:var(--al);border:1px solid rgba(217,119,6,.2);
+  border-radius:10px;padding:10px 13px;margin-top:10px;
+  font-size:12px;color:#92400e;font-weight:600;line-height:1.5;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.faq-a .faq-warn::before{content:'⚠️';flex-shrink:0}
+.faq-a ul{padding-left:16px;margin:8px 0}
+.faq-a ul li{margin-bottom:5px}
+.faq-a .faq-step{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:6px 0;border-bottom:1px solid var(--s3);font-size:13px;
+}
+.faq-a .faq-step:last-child{border-bottom:none}
+.faq-a .faq-step-n{
+  width:22px;height:22px;border-radius:50%;background:var(--g);
+  color:#fff;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.faq-cta{
+  width:100%;padding:12px;margin-top:12px;
+  background:var(--g);color:#fff;
+  font-size:13px;font-weight:700;border:none;border-radius:10px;
+  cursor:pointer;font-family:var(--f);transition:all .2s;
+}
+.faq-cta:active{background:var(--gd)}
 /* ── Import format toggle ── */
 .import-fmt-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .import-fmt-btn{border:2px solid var(--bd);border-radius:14px;padding:12px;cursor:pointer;transition:all .2s;background:var(--s);display:flex;align-items:center;gap:10px;position:relative}
@@ -628,7 +721,10 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
           <div class="h-gr" id="h-gr">Bom dia ☀️</div>
           <div class="h-nm" id="h-nm">...</div>
         </div>
-        <div class="h-av" id="h-av">?</div>
+        <div style="display:flex;align-items:center;gap:8px;position:relative;z-index:1">
+          <button class="faq-hero-btn" onclick="openFaq()" title="Ajuda">?</button>
+          <div class="h-av" id="h-av">?</div>
+        </div>
       </div>
       <div class="h-lbl">SALDO DISPONÍVEL</div>
       <div class="h-bal" id="h-bal" onclick="toggleHide()">R$ 0,00</div>
@@ -678,6 +774,18 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
       <div class="qa" onclick="openTxn('income')"><div class="qa-ic" style="background:#dcfce7">💰</div><div class="qa-lb">Entrada</div></div>
       <div class="qa" onclick="openPdfImport()"><div class="qa-ic" style="background:#dbeafe">📂</div><div class="qa-lb">Importar extrato</div></div>
       <div class="qa" onclick="goPage('pg-ai')"><div class="qa-ic" style="background:#ede9fe">🤖</div><div class="qa-lb">Finn IA</div></div>
+    </div>
+
+    <!-- Help strip -->
+    <div class="help-strip" onclick="openFaq()">
+      <div class="hs-left">
+        <div class="hs-ic">💡</div>
+        <div>
+          <div class="hs-title">Ficou com dúvida? Veja o guia do app</div>
+          <div class="hs-sub">Como usar cada função, explicado de forma simples</div>
+        </div>
+      </div>
+      <div class="hs-arrow">›</div>
     </div>
 
     <!-- Forecast -->
@@ -931,7 +1039,34 @@ input,select,button,textarea{font-family:var(--f);color:var(--t)}
   </div>
 </div>
 
-<!-- ══ MODAL: PDF IMPORT ══ -->
+<!-- ══ MODAL: FAQ ══ -->
+<div class="overlay" id="ov-faq">
+  <div class="sheet" style="max-height:96vh">
+    <div class="sh-handle"></div>
+    <div class="sh-hdr">
+      <div class="sh-title">💡 Guia do Grão</div>
+      <button class="sh-close" onclick="closeOv('ov-faq')">✕</button>
+    </div>
+    <div class="sh-body" style="padding:0">
+
+      <!-- Category tabs -->
+      <div class="faq-tabs" id="faq-tabs">
+        <div class="faq-tab on" onclick="showFaqCat(0,this)">🏠 Início</div>
+        <div class="faq-tab" onclick="showFaqCat(1,this)">💸 Gastos</div>
+        <div class="faq-tab" onclick="showFaqCat(2,this)">📊 Relatórios</div>
+        <div class="faq-tab" onclick="showFaqCat(3,this)">🎯 Metas</div>
+        <div class="faq-tab" onclick="showFaqCat(4,this)">💳 Cartões</div>
+        <div class="faq-tab" onclick="showFaqCat(5,this)">🤖 Finn IA</div>
+        <div class="faq-tab" onclick="showFaqCat(6,this)">📂 Importar</div>
+        <div class="faq-tab" onclick="showFaqCat(7,this)">🏆 Conquistas</div>
+      </div>
+
+      <!-- FAQ content -->
+      <div id="faq-content" style="padding:16px 20px 32px"></div>
+
+    </div>
+  </div>
+</div>
 <input type="file" id="pdf-input" accept=".pdf,.ofx,.qfx,application/pdf" style="display:none" onchange="handleImportFile(this)"/>
 <div class="overlay" id="ov-pdf">
   <div class="sheet">
@@ -1820,8 +1955,122 @@ function animNums(){
 
 
 /* ═══════════════════════════════════
-   OFX / QFX PARSER
+   FAQ / HELP CENTER
 ═══════════════════════════════════ */
+var FAQ_DATA = [
+  // 0 — INÍCIO / DASHBOARD
+  { cat:'🏠 Início', items:[
+    { q:'🏠', t:'O que é a tela de Início?', a:'<p>A tela de Início é o seu <strong>painel de controle financeiro</strong>. Ela mostra um resumo de tudo que está acontecendo com suas finanças em tempo real.</p><p>Você vê: seu saldo disponível, quanto entrou e saiu no mês, sua pontuação de saúde financeira, sequência de dias, previsão até o fim do mês, orçamentos por categoria e alertas automáticos.</p><div class="faq-tip">Todo o conteúdo aqui é gerado automaticamente com base nas transações que você registra ou importa.</div>' },
+    { q:'💚', t:'O que é o Saldo Disponível?', a:'<p>É a diferença entre tudo que <strong>entrou</strong> (salário, freelances, etc) e tudo que <strong>saiu</strong> (gastos) no mês atual.</p><p><strong>Fórmula:</strong> Saldo = Total de entradas − Total de gastos</p><p>Se o saldo for negativo, significa que seus gastos superaram suas entradas neste mês.</p><div class="faq-tip">Toque no saldo para ocultar ou mostrar o valor — útil quando outras pessoas estão por perto.</div>' },
+    { q:'📊', t:'O que é a Saúde Financeira?', a:'<p>É uma <strong>pontuação de 0 a 100</strong> que avalia como estão suas finanças no mês atual. Quanto maior, melhor.</p><ul><li><strong>80–100:</strong> Excelente — gastos controlados, sobra dinheiro</li><li><strong>65–79:</strong> Bom — no caminho certo</li><li><strong>50–64:</strong> Razoável — pequenos ajustes necessários</li><li><strong>Abaixo de 50:</strong> Atenção — gastos comprometem a renda</li></ul><p>A pontuação leva em conta: proporção gasto/renda, cartões de crédito e existência de metas ativas.</p><div class="faq-tip">A pontuação atualiza automaticamente toda vez que você registra uma nova transação.</div>' },
+    { q:'📅', t:'O que é a Previsão do mês?', a:'<p>É um <strong>gráfico de linha</strong> que mostra como seu saldo vai evoluir até o último dia do mês.</p><p><strong>Como é calculado:</strong> O app analisa quanto você já gastou nos dias anteriores, calcula uma média diária de gastos e projeta os dias restantes com essa média.</p><p>Se a linha entrar no vermelho antes do fim do mês, um alerta aparece automaticamente: "Saldo negativo previsto".</p><div class="faq-warn">A previsão é uma estimativa — gastos inesperados podem mudar o resultado. Use como guia, não como certeza.</div>' },
+    { q:'🎯', t:'O que é o Orçamento do mês?', a:'<p>São <strong>limites de gasto por categoria</strong> que o app usa para te alertar quando você está gastando demais.</p><p>Os valores padrão são: Alimentação R$800 · Transporte R$400 · Moradia R$1.200 · Saúde R$300 · Lazer R$400 · Compras R$500 · Educação R$200 · Contas R$600.</p><p>A barra fica <span style="color:#16a34a;font-weight:700">verde</span> até 70%, <span style="color:#d97706;font-weight:700">amarela</span> entre 70–90% e <span style="color:#dc2626;font-weight:700">vermelha</span> acima de 90%.</p><div class="faq-tip">Os limites são baseados em médias brasileiras. Em breve será possível personalizar cada valor.</div>' },
+    { q:'🔔', t:'O que são as assinaturas detectadas?', a:'<p>O app analisa seu histórico de transações e identifica <strong>gastos que se repetem com o mesmo valor</strong> — Netflix, Spotify, academia, planos de celular, etc.</p><p>Isso mostra o "vazamento mensal invisível" — dinheiro que sai todo mês sem você perceber.</p><div class="faq-tip">As assinaturas são detectadas automaticamente. Quanto mais transações você tiver, mais precisa fica a detecção.</div>' },
+  ]},
+  // 1 — GASTOS / TRANSAÇÕES
+  { cat:'💸 Gastos', items:[
+    { q:'➕', t:'Como registrar um gasto ou entrada?', a:'<p>Toque no botão <strong>+ (verde)</strong> no canto inferior direito, ou em "Gasto" / "Entrada" nas ações rápidas da tela de Início.</p><div class="faq-step"><div class="faq-step-n">1</div><div>Escolha se é um <strong>Gasto</strong> (saída de dinheiro) ou <strong>Entrada</strong> (dinheiro que recebeu)</div></div><div class="faq-step"><div class="faq-step-n">2</div><div>Digite o <strong>valor</strong> (ex: 45,90)</div></div><div class="faq-step"><div class="faq-step-n">3</div><div>Descreva o gasto (ex: "iFood", "Mercado", "Salário")</div></div><div class="faq-step"><div class="faq-step-n">4</div><div>Selecione a <strong>categoria</strong> tocando nos ícones</div></div><div class="faq-step"><div class="faq-step-n">5</div><div>Confirme a <strong>data</strong> (já vem com hoje)</div></div><div class="faq-step"><div class="faq-step-n">6</div><div>Toque em <strong>Salvar</strong></div></div><div class="faq-tip">Registre seus gastos assim que acontecerem. O hábito de 30 segundos por gasto transforma sua consciência financeira.</div>' },
+    { q:'🏷️', t:'Para que serve a Categoria?', a:'<p>A categoria agrupa seus gastos para você entender <strong>onde o dinheiro vai</strong>. Sem categorias, é impossível saber se você gasta mais com alimentação ou lazer.</p><p>As categorias alimentam: o gráfico de pizza nos Relatórios, as barras de orçamento na tela de Início, os alertas automáticos e as análises do Finn IA.</p><div class="faq-tip">Quando você importa um extrato PDF ou OFX, o app categoriza automaticamente pela descrição da transação. Mas você pode corrigir na hora da importação.</div>' },
+    { q:'🗑️', t:'Como deletar uma transação?', a:'<p>Na aba <strong>Gastos</strong>, ou na lista de últimas transações na tela de Início, <strong>toque sobre a transação</strong> que deseja remover.</p><p>Uma confirmação aparecerá perguntando se você quer deletar. Confirme e ela será removida.</p><div class="faq-warn">A exclusão é permanente. Se deletar por engano, terá que registrar novamente.</div>' },
+    { q:'📆', t:'Como navegar entre os meses?', a:'<p>Na aba <strong>Gastos</strong> e em <strong>Relatórios</strong>, use as <strong>setas ‹ ›</strong> na barra de mês para navegar para meses anteriores ou futuros.</p><p>Toda a tela atualiza para mostrar os dados do mês selecionado — transações, orçamento, gráficos e saldo.</p><div class="faq-tip">O mês atual sempre aparece selecionado ao abrir o app. Navegue para meses anteriores para analisar sua evolução financeira.</div>' },
+    { q:'🔍', t:'Como filtrar as transações?', a:'<p>Na aba Gastos, use os <strong>chips coloridos</strong> abaixo da barra de mês para filtrar:</p><ul><li><strong>Todas</strong> — mostra tudo</li><li><strong>Entradas</strong> — só o que recebeu</li><li><strong>Saídas</strong> — só gastos</li><li><strong>Alimentação, Transporte...</strong> — filtra por categoria específica</li></ul><p>As transações ficam <strong>agrupadas por data</strong> (Hoje, 8 de abril, etc.) para facilitar a leitura.</p>' },
+  ]},
+  // 2 — RELATÓRIOS
+  { cat:'📊 Relatórios', items:[
+    { q:'📊', t:'O que são os Relatórios?', a:'<p>A aba de Relatórios mostra uma <strong>análise visual completa</strong> do seu mês financeiro. É onde você entende o quadro geral.</p><p>Você encontra: 4 KPIs (entradas, saídas, saldo, taxa de poupança), gráfico de pizza por categoria, gráfico de barras com os últimos 6 meses, tabela de fluxo de caixa e projeção do próximo mês.</p><div class="faq-tip">Acesse os Relatórios pelo menos uma vez por semana para acompanhar se está dentro do orçamento.</div>' },
+    { q:'🍕', t:'O que é o gráfico de pizza?', a:'<p>Mostra <strong>quanto você gastou em cada categoria</strong> no mês atual, em proporção. Quanto maior a fatia, maior o gasto naquela área.</p><p>O valor no centro do gráfico é o total de gastos do mês. Toque em cada fatia para ver o valor exato da categoria.</p><div class="faq-tip">Use o gráfico de pizza para identificar onde está o "buraco" do seu orçamento. Se Lazer está tomando 40% do círculo, é hora de rever.</div>' },
+    { q:'📈', t:'O que é o gráfico de barras (6 meses)?', a:'<p>Compara suas <strong>entradas</strong> (verde) e <strong>saídas</strong> (vermelho) nos últimos 6 meses lado a lado.</p><p>Ideal para identificar tendências: seus gastos estão crescendo? Sua renda está estável? Teve algum mês atípico?</p><div class="faq-tip">Se as barras vermelhas estiverem sempre maiores que as verdes, você está gastando mais do que ganha de forma recorrente — sinal de alerta.</div>' },
+    { q:'💹', t:'O que é a Tabela de Fluxo de Caixa?', a:'<p>Resume cada um dos últimos 6 meses em uma linha com: entradas, saídas e saldo final.</p><p>O saldo em <span style="color:#16a34a;font-weight:700">verde</span> = mês no azul. Em <span style="color:#dc2626;font-weight:700">vermelho</span> = mês no vermelho.</p><div class="faq-tip">Use a tabela para ver sua evolução histórica. Quantos meses você fechou no azul nos últimos 6?</div>' },
+    { q:'🔮', t:'O que é a Projeção do próximo mês?', a:'<p>É uma <strong>estimativa automática</strong> do que deve acontecer no mês seguinte, baseada na média dos últimos 3 meses.</p><p>Se nos últimos 3 meses você recebeu em média R$4.000 e gastou em média R$3.200, a projeção indica saldo de R$800.</p><div class="faq-warn">É uma estimativa estatística, não uma previsão garantida. Meses com eventos especiais (férias, IPVA, 13º) podem diferir bastante.</div>' },
+    { q:'💾', t:'O que é a Taxa de Poupança?', a:'<p>É a <strong>porcentagem da sua renda que sobrou</strong> no mês. É um dos indicadores mais importantes da sua saúde financeira.</p><p><strong>Referências:</strong></p><ul><li>Abaixo de 5% → Atenção</li><li>5–10% → Razoável</li><li>10–20% → Bom</li><li>Acima de 20% → Excelente</li></ul><div class="faq-tip">O ideal recomendado por especialistas financeiros é guardar pelo menos 10–20% da renda todo mês.</div>' },
+  ]},
+  // 3 — METAS
+  { cat:'🎯 Metas', items:[
+    { q:'🎯', t:'O que são as Metas?', a:'<p>Metas são <strong>objetivos financeiros</strong> com valor e prazo definidos. Elas transformam um sonho vago ("quero viajar") em um plano concreto ("preciso juntar R$5.000 até dezembro").</p><p>Cada meta tem: nome, ícone, valor alvo, quanto já foi guardado, prazo e barra de progresso visual.</p><div class="faq-tip">Criar pelo menos uma meta aumenta em 5 pontos sua Saúde Financeira. Ter uma meta ativa te mantém motivado a economizar.</div>' },
+    { q:'➕', t:'Como criar uma meta?', a:'<p>Toque no botão <strong>+ Meta</strong> no canto superior direito da aba Metas.</p><div class="faq-step"><div class="faq-step-n">1</div><div>Digite o <strong>nome</strong> (ex: "Reserva de emergência")</div></div><div class="faq-step"><div class="faq-step-n">2</div><div>Escolha um <strong>ícone</strong> que represente o objetivo</div></div><div class="faq-step"><div class="faq-step-n">3</div><div>Defina o <strong>valor alvo</strong> (quanto precisa juntar)</div></div><div class="faq-step"><div class="faq-step-n">4</div><div>Informe quanto <strong>já guardou</strong> (pode ser 0)</div></div><div class="faq-step"><div class="faq-step-n">5</div><div>Defina um <strong>prazo</strong> (mês e ano)</div></div><div class="faq-step"><div class="faq-step-n">6</div><div>Toque em <strong>Criar meta</strong></div></div><div class="faq-tip">Comece pela Reserva de Emergência: 3 a 6 meses da sua renda guardados. É o alicerce de qualquer vida financeira saudável.</div>' },
+    { q:'💰', t:'Como registrar um depósito na meta?', a:'<p>Na aba Metas, toque no botão <strong>"+ Depositar"</strong> na meta desejada. Informe o valor que você acabou de guardar.</p><p>O progresso da barra atualiza imediatamente. Quando atingir 100%, você ganha pontos e uma conquista é desbloqueada.</p><div class="faq-tip">Faça depósitos nas metas sempre que receber. Transferir o valor antes de gastar é o segredo para realmente atingir os objetivos.</div>' },
+    { q:'📊', t:'Como a porcentagem da meta é calculada?', a:'<p>É simples: <strong>(valor guardado ÷ valor alvo) × 100</strong></p><p>Exemplo: se a meta é R$10.000 e você já guardou R$3.500, o progresso é 35%.</p><div class="faq-tip">O Finn IA pode te dizer em quantos meses você vai atingir sua meta com base no seu ritmo atual. Pergunte: "quando vou atingir minha meta?"</div>' },
+  ]},
+  // 4 — CARTÕES
+  { cat:'💳 Cartões', items:[
+    { q:'💳', t:'Para que serve a aba de Cartões?', a:'<p>A aba de Cartões te permite <strong>acompanhar todos os seus cartões de crédito</strong> em um só lugar: limite, quanto já foi usado, data de fechamento e vencimento.</p><p>Assim você nunca é pego de surpresa com fatura alta ou com o cartão bloqueado por limite atingido.</p>' },
+    { q:'➕', t:'Como adicionar um cartão?', a:'<p>Toque no botão <strong>+ Cartão</strong> e preencha:</p><ul><li><strong>Nome:</strong> Nubank, Itaú, C6...</li><li><strong>Limite total:</strong> o limite máximo do cartão</li><li><strong>Saldo usado:</strong> quanto já está comprometido na fatura atual</li><li><strong>Dia de fechamento:</strong> quando a fatura fecha (ex: dia 3)</li><li><strong>Dia de vencimento:</strong> quando você deve pagar (ex: dia 10)</li></ul><div class="faq-tip">Mantenha o saldo usado atualizado manualmente quando fizer compras no crédito. Isso te dá visão real do limite disponível.</div>' },
+    { q:'🚦', t:'O que significam as cores na barra de uso?', a:'<p>A barra mostra quanto do limite do cartão está comprometido:</p><ul><li><span style="color:#16a34a;font-weight:700">Verde</span> — Até 60% do limite usado (seguro)</li><li><span style="color:#d97706;font-weight:700">Amarelo</span> — 60–80% do limite (atenção)</li><li><span style="color:#dc2626;font-weight:700">Vermelho</span> — Acima de 80% do limite (perigoso)</li></ul><div class="faq-warn">Usar mais de 70% do limite regularmente pode prejudicar seu score de crédito nos birôs (Serasa/SPC).</div>' },
+    { q:'📱', t:'O que é o Simulador de Dívida?', a:'<p>É uma calculadora que mostra a diferença brutal entre <strong>pagar só o mínimo</strong> do cartão e <strong>ter um plano organizado</strong>.</p><p>Digite o saldo devedor e a taxa de juros mensal. O simulador calcula quantos meses você levaria pagando o mínimo, quanto pagaria de juros no total e quanto economizaria com um plano estruturado.</p><div class="faq-warn">Os juros do rotativo do cartão de crédito no Brasil são os mais altos do mundo — em média 14% ao mês (mais de 300% ao ano). Nunca pague só o mínimo.</div>' },
+  ]},
+  // 5 — FINN IA
+  { cat:'🤖 Finn IA', items:[
+    { q:'🤖', t:'Quem é o Finn?', a:'<p>O Finn é seu <strong>consultor financeiro pessoal com IA</strong>. Ele analisa todos os seus dados financeiros em tempo real e responde perguntas em linguagem natural, como se você estivesse conversando com um especialista.</p><p>Ao contrário de dicas genéricas, o Finn fala <em>sobre a sua situação específica</em>: seus gastos reais, suas metas, seu saldo.</p><div class="faq-tip">O Finn funciona 100% offline, direto no seu celular — sem enviar dados para servidores. Custo zero para você.</div>' },
+    { q:'💬', t:'O que posso perguntar para o Finn?', a:'<p>Você pode perguntar qualquer coisa sobre suas finanças. Exemplos:</p><ul><li>"Por que estou no vermelho?"</li><li>"Onde mais gasto dinheiro?"</li><li>"Como economizar R$500 este mês?"</li><li>"Quando vou atingir minha meta?"</li><li>"Analise minha situação financeira"</li><li>"Dicas para sair das dívidas"</li><li>"Como estão meus cartões?"</li><li>"Qual é minha previsão para o fim do mês?"</li></ul><div class="faq-tip">Use os botões de perguntas rápidas na parte de baixo do chat para começar. Você também pode digitar livremente.</div>' },
+    { q:'📊', t:'Como o Finn sabe minha situação?', a:'<p>O Finn acessa em tempo real todos os dados que você tem no app: transações do mês atual, metas e progresso, cartões e limites, histórico dos últimos 6 meses e assinaturas detectadas.</p><p>Cada resposta é gerada com base nos seus números reais — não são respostas genéricas de uma FAQ.</p><div class="faq-tip">Quanto mais transações você registrar (ou importar pelo extrato), mais preciso e personalizado fica o Finn.</div>' },
+  ]},
+  // 6 — IMPORTAR EXTRATO
+  { cat:'📂 Importar', items:[
+    { q:'📂', t:'O que é a importação de extrato?', a:'<p>É uma funcionalidade que permite <strong>importar automaticamente</strong> todas as transações do seu banco para o Grão, sem precisar digitar uma a uma.</p><p>Você exporta o extrato pelo app do banco e abre no Grão. O app lê o arquivo, identifica cada transação, categoriza automaticamente e te mostra uma prévia para revisar antes de confirmar.</p><div class="faq-tip">Suporta dois formatos: <strong>OFX/QFX</strong> (mais preciso, dados estruturados) e <strong>PDF</strong> (extrato em PDF gerado pelo banco).</div>' },
+    { q:'⚡', t:'Qual a diferença entre OFX e PDF?', a:'<p><strong>OFX/QFX</strong> é um arquivo de dados estruturados, como uma planilha. Cada transação tem data, valor e descrição exatos. Precisão de 100%. <strong>Recomendado sempre que disponível.</strong></p><p><strong>PDF</strong> é o extrato visual do banco em formato de documento. O app extrai o texto e interpreta as transações. Precisão de ~85% — pode ter erros em PDFs com formatação complexa.</p><div class="faq-tip">Se seu banco oferece exportar como OFX ou Money (.ofx), sempre use esse. É muito mais confiável que o PDF.</div>' },
+    { q:'🏦', t:'Como exportar o extrato no meu banco?', a:'<p>Cada banco tem um caminho diferente. Os mais comuns:</p><div class="faq-step"><div class="faq-step-n">🟣</div><div><strong>Nubank:</strong> Perfil → Meu extrato → Exportar → OFX</div></div><div class="faq-step"><div class="faq-step-n">🔵</div><div><strong>Itaú:</strong> Extrato → Exportar dados → Formato OFX</div></div><div class="faq-step"><div class="faq-step-n">🔴</div><div><strong>Bradesco:</strong> Extrato → Salvar extrato → OFX</div></div><div class="faq-step"><div class="faq-step-n">🟠</div><div><strong>Santander:</strong> Internet Banking → Extrato → Exportar OFX</div></div><div class="faq-step"><div class="faq-step-n">🟢</div><div><strong>Inter:</strong> Extrato → Exportar → OFX</div></div><div class="faq-step"><div class="faq-step-n">⚫</div><div><strong>C6 Bank:</strong> Extrato → Baixar → OFX</div></div><div class="faq-tip">Se não achar o OFX, procure por "Money", "Quicken" ou simplesmente "Exportar extrato" no app do seu banco.</div>' },
+    { q:'✏️', t:'Posso corrigir categorias ao importar?', a:'<p>Sim! Na tela de prévia da importação, cada transação tem um <strong>selector de categoria</strong> que você pode mudar antes de confirmar.</p><p>Você também pode desmarcar transações que não quer importar (parcelamentos já registrados, transferências entre contas próprias, etc.).</p><div class="faq-tip">O app não importa duplicatas — se você importar o mesmo extrato duas vezes, as transações já existentes são ignoradas automaticamente.</div>' },
+    { q:'🔒', t:'Meus dados bancários ficam seguros?', a:'<p><strong>Sim, com 100% de certeza.</strong> O Grão não tem acesso direto à sua conta bancária. Você exporta o extrato do app do banco e abre no Grão.</p><p>O arquivo é lido diretamente no seu celular — nenhum dado é enviado para nenhum servidor. O arquivo OFX ou PDF nunca sai do seu dispositivo.</p><div class="faq-tip">Você pode verificar isso: desative o Wi-Fi e o 4G antes de importar. O app continua funcionando, porque tudo acontece localmente.</div>' },
+  ]},
+  // 7 — CONQUISTAS
+  { cat:'🏆 Conquistas', items:[
+    { q:'🏆', t:'O que são as Conquistas?', a:'<p>O sistema de conquistas transforma organização financeira em um <strong>jogo com recompensas</strong>. Cada ação positiva te dá pontos e desbloqueia medalhas.</p><p>Isso existe porque pesquisas mostram que gamificação aumenta em até 3x a consistência em hábitos financeiros. Você não abandona o app, porque há algo a conquistar.</p>' },
+    { q:'🔥', t:'O que é a Sequência (Streak)?', a:'<p>É o número de <strong>dias consecutivos</strong> em que você abriu o app e manteve controle das finanças. Quanto maior, melhor o nível do badge.</p><ul><li>🌱 0 dias — Iniciante</li><li>🌿 3+ dias — Consistente</li><li>🔥 7+ dias — Em chamas</li><li>⚡ 14+ dias — Poderoso</li><li>💎 30+ dias — Diamante</li><li>👑 60+ dias — Lendário</li></ul><div class="faq-warn">A sequência zera se você ficar mais de 1 dia sem abrir o app. Tente pelo menos tocar no app diariamente.</div>' },
+    { q:'⭐', t:'Como ganhar pontos?', a:'<p>Você ganha pontos em cada ação positiva:</p><ul><li><strong>+10 pts</strong> — Registrar uma transação</li><li><strong>+50 pts</strong> — Criar uma meta</li><li><strong>+50 pts</strong> — Depositar em uma meta</li><li><strong>+200 pts</strong> — Completar uma meta (100%)</li><li><strong>+5 pts</strong> — Importar cada transação via extrato</li></ul><p>Com os pontos você sobe de nível: Aprendiz → Organizado → Controlado → Inteligente → Expert → Mestre.</p>' },
+    { q:'⚡', t:'O que são os Desafios do mês?', a:'<p>São <strong>metas mensais automáticas</strong> que o app cria para te motivar a melhorar:</p><ul><li>🍔 Manter Alimentação abaixo de R$600</li><li>💰 Poupar pelo menos 20% da renda</li><li>🎉 Manter Lazer abaixo de R$300</li><li>🔥 Manter sequência de 7 dias</li></ul><p>Cada desafio tem uma barra de progresso em tempo real e vale +50 pontos ao completar.</p><div class="faq-tip">Os desafios reiniciam todo mês. São baseados em médias saudáveis, não em valores impossíveis.</div>' },
+  ]},
+];
+
+var currentFaqCat = 0;
+
+function openFaq(){
+  currentFaqCat = 0;
+  renderFaqContent(0);
+  // Reset tabs
+  document.querySelectorAll('.faq-tab').forEach(function(t,i){ t.classList.toggle('on', i===0); });
+  openOv('ov-faq');
+}
+
+function showFaqCat(idx, el){
+  currentFaqCat = idx;
+  document.querySelectorAll('.faq-tab').forEach(function(t){ t.classList.remove('on'); });
+  el.classList.add('on');
+  renderFaqContent(idx);
+  // Scroll content to top
+  var fc = document.getElementById('faq-content');
+  if(fc) fc.scrollTop = 0;
+  var sheet = el.closest('.sheet');
+  if(sheet) sheet.scrollTop = 0;
+}
+
+function renderFaqContent(idx){
+  var cat = FAQ_DATA[idx];
+  if(!cat) return;
+  var html = '<div class="faq-section-title">' + cat.cat + '</div>';
+  html += '<div class="faq-section-sub">Toque em qualquer pergunta para ver a resposta detalhada</div>';
+  cat.items.forEach(function(item, i){
+    var id = 'faq-' + idx + '-' + i;
+    html += '<div class="faq-item" id="' + id + '">'
+      + '<div class="faq-q" onclick="toggleFaq(\'' + id + '\')">'
+      + '<div class="faq-q-icon">' + item.q + '</div>'
+      + '<div class="faq-q-text">' + item.t + '</div>'
+      + '<div class="faq-chevron">›</div>'
+      + '</div>'
+      + '<div class="faq-a">' + item.a + '</div>'
+      + '</div>';
+  });
+  document.getElementById('faq-content').innerHTML = html;
+}
+
+function toggleFaq(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  var wasOpen = el.classList.contains('open');
+  // Close all in current category
+  document.querySelectorAll('.faq-item').forEach(function(f){ f.classList.remove('open'); });
+  // Open this one if it was closed
+  if(!wasOpen) el.classList.add('open');
+}
 function parseOFX(text){
   var txns=[];
   // OFX can be SGML or XML — handle both
